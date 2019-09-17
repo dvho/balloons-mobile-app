@@ -8,19 +8,33 @@ class Home extends React.Component {
     constructor() {
         super()
         this.state = {
-            balloonNumber: 0
+            balloonNumber: 0,
+            score: 0,
+            life: 3
         }
+        this.increaseScore = this.increaseScore.bind(this)
+        this.decreaseLife = this.decreaseLife.bind(this)
     }
 
-    missed() {
-        console.log('missed')
+    decreaseScore() {
+        this.setState({score: this.state.score - 5})
+        // console.log(`Score: ${this.state.score}`)
+    }
+
+    increaseScore() {
+        this.setState({score: this.state.score + 1})
+        // console.log(`Score: ${this.state.score}`)
+    }
+
+    decreaseLife(touched) {
+        this.setState({life: touched ? this.state.life : this.state.life - 1})
+        console.log(`Life: ${this.state.life}`)
     }
 
     componentDidMount() {
         (control = () => {
             let timer = Math.random() * (1200 - (this.state.balloonNumber * 2))
             this.setState({balloonNumber: this.state.balloonNumber + 1})
-            console.log(timer)
             setTimeout(control, timer)
         })()
     }
@@ -29,11 +43,11 @@ class Home extends React.Component {
         const allBalloons = []
 
         for (i = 0; i < this.state.balloonNumber; i++) {
-            allBalloons.push(<Balloon key={i}/>)
+            allBalloons.push(<Balloon key={i} increaseScore={this.increaseScore} decreaseLife={this.decreaseLife}/>)
         }
 
         return(
-            <TouchableOpacity style={{width: config.screenWidth, height: config.screenHeight}} onPressIn={() => this.missed()} activeOpacity={0}><View style={styles.container}>{allBalloons}</View></TouchableOpacity>
+            <TouchableOpacity style={{width: config.screenWidth, height: config.screenHeight}} onPressIn={() => this.decreaseScore()} activeOpacity={0}><View style={styles.container}>{allBalloons}</View></TouchableOpacity>
         )
     }
 }
@@ -43,10 +57,9 @@ const styles = StyleSheet.create({
         flex: 1,
         width: config.screenWidth,
         height: config.screenHeight,
-        backgroundColor: 'rgb(239,239,255)', //This will be sky blue
+        backgroundColor: 'rgb(239,239,255)',
         //marginTop: config.statusBarHeight
     }
 })
-
 
 export default Home

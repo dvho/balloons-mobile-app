@@ -2,6 +2,8 @@ import React from 'react'
 import { StyleSheet, View, TouchableOpacity, Animated, Easing } from 'react-native'
 import config from '../../config'
 
+//https://stackoverflow.com/questions/38053071/react-native-animated-complete-event
+
 class Balloon extends React.PureComponent {
 
     constructor() {
@@ -21,17 +23,19 @@ class Balloon extends React.PureComponent {
         Animated.timing(
           top,
           { toValue: 0 - config.screenHeight - diameter * 2,
-            duration: 13000, //this value should be between 7000 and 13000, so 7000 + props.speed
+            duration: 7000 + Math.random() * 6000,
             easing: Easing.bezier(0, 0, 1, 1), //this is linear because the default apparently isn't
             userNativeDriver: true
-        }).start()
+        }).start(() => this.props.decreaseLife(this.state.touched))
+
+
 
         return(
             this.state.touched ? null
                 :
             <Animated.View style={[styles.container, {top: top, zIndex: zIndex}]}>
 
-                <TouchableOpacity onPressIn={() => this.setState({touched: true})} activeOpacity={1} style={{left: positionFromLeft}}>
+                <TouchableOpacity onPressIn={() => {this.setState({touched: true}); this.props.increaseScore()}} activeOpacity={1} style={{left: positionFromLeft}}>
                     <View style={[styles.balloon, {width: diameter, height: diameter, borderBottomLeftRadius: diameter, borderTopLeftRadius: diameter, borderTopRightRadius: diameter, backgroundColor: balloonColor}]}></View>
                 </TouchableOpacity>
 
