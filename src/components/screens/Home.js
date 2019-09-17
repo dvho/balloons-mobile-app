@@ -7,6 +7,7 @@ import config from '../../config'
 //Should cache some gif assets and have an animation running in the background that looks like daytime and one for night when the game is over
 //Font for score
 //Balloon pop animation
+//Add reset button
 
 class Home extends React.Component {
 
@@ -83,11 +84,10 @@ class Home extends React.Component {
             <View>
                 <TouchableOpacity style={{width: config.screenWidth, height: config.screenHeight}} onPressIn={() => this.decreaseScore()} activeOpacity={this.state.life > 0 ? 0 : 1}>
                 <View style={{marginTop: 40, opacity: .04}}><MaterialCommunityIcons name={'skull'} size={config.screenWidth} color={'rgb(0,0,0)'}/></View>
-                <View style={[styles.container, {opacity: this.state.revealSkull ? 0 : 1, backgroundColor: this.state.life > 0 ? 'rgb(239,239,255)' : 'rgb(64,64,64)'}]}>{allBalloons}</View>
+                <View style={[styles.container, {opacity: this.state.revealSkull ? 0 : 1, backgroundColor: this.state.life > 0 ? 'rgb(239,239,255)' : 'rgb(0,64,128)'}]}>{allBalloons}</View>
                 <View style={styles.scoreBar}>
                     <Text style={styles.score}>{this.state.life > 0 ? 'Score: ' : 'Final Score: '}{this.state.score}</Text>
                     <Text style={styles.lives}>{lives}</Text>
-
                 </View>
                 </TouchableOpacity>
             </View>
