@@ -1,9 +1,12 @@
 import React from 'react'
 import { StyleSheet, View, TouchableOpacity, Text } from 'react-native'
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { Balloon } from '../views'
 import config from '../../config'
 
 //Should cache some gif assets and have an animation running in the background that looks like daytime and one for night when the game is over
+//Font for score
+//Balloon pop animation
 
 class Home extends React.Component {
 
@@ -13,7 +16,8 @@ class Home extends React.Component {
             balloonNumber: 0,
             tempBalloonNumber: 0,
             score: 0,
-            life: 3
+            life: 3,
+            revealSkull: false
         }
         this.increaseScore = this.increaseScore.bind(this)
         this.decreaseLife = this.decreaseLife.bind(this)
@@ -22,7 +26,13 @@ class Home extends React.Component {
     }
 
     decreaseScore() {
-        this.setState({score: ((this.state.life > 0) && (this.state.score > 5)) ? this.state.score - 5 : this.state.score})
+        this.setState({
+            score: ((this.state.life > 0) && (this.state.score > 5)) ? this.state.score - 5 : this.state.score,
+            revealSkull: ((this.state.life > 0) && (this.state.score > 5)) ? true : false
+        })
+        setTimeout(() => {
+            this.setState({revealSkull: false})
+        }, 150)
     }
 
     increaseScore() {
@@ -72,10 +82,12 @@ class Home extends React.Component {
         return(
             <View>
                 <TouchableOpacity style={{width: config.screenWidth, height: config.screenHeight}} onPressIn={() => this.decreaseScore()} activeOpacity={this.state.life > 0 ? 0 : 1}>
-                <View style={[styles.container, {backgroundColor: this.state.life > 0 ? 'rgb(239,239,255)' : 'rgb(64,64,64)'}]}>{allBalloons}</View>
+                <View style={{marginTop: 40, opacity: .04}}><MaterialCommunityIcons name={'skull'} size={config.screenWidth} color={'rgb(0,0,0)'}/></View>
+                <View style={[styles.container, {opacity: this.state.revealSkull ? 0 : 1, backgroundColor: this.state.life > 0 ? 'rgb(239,239,255)' : 'rgb(64,64,64)'}]}>{allBalloons}</View>
                 <View style={styles.scoreBar}>
                     <Text style={styles.score}>{this.state.life > 0 ? 'Score: ' : 'Final Score: '}{this.state.score}</Text>
                     <Text style={styles.lives}>{lives}</Text>
+
                 </View>
                 </TouchableOpacity>
             </View>
@@ -85,6 +97,7 @@ class Home extends React.Component {
 
 const styles = StyleSheet.create({
     container: {
+        position: 'absolute',
         flex: 1,
         width: config.screenWidth,
         height: config.screenHeight
