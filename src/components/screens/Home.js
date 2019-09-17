@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, View, TouchableOpacity } from 'react-native'
+import { StyleSheet, View, TouchableOpacity, Text } from 'react-native'
 import { Balloon } from '../views'
 import config from '../../config'
 
@@ -27,8 +27,8 @@ class Home extends React.Component {
     }
 
     decreaseLife(touched) {
-        this.setState({life: touched ? this.state.life : this.state.life - 1})
-        console.log(`Life: ${this.state.life}`)
+        this.setState({life: touched ? this.state.life : (this.state.life === 0 ? 0 : this.state.life - 1)})
+        // console.log(`Life: ${this.state.life}`)
     }
 
     componentDidMount() {
@@ -47,7 +47,7 @@ class Home extends React.Component {
         }
 
         return(
-            <TouchableOpacity style={{width: config.screenWidth, height: config.screenHeight}} onPressIn={() => this.decreaseScore()} activeOpacity={0}><View style={styles.container}>{allBalloons}</View></TouchableOpacity>
+            <View><TouchableOpacity style={{width: config.screenWidth, height: config.screenHeight}} onPressIn={() => this.decreaseScore()} activeOpacity={0}><View style={styles.container}>{allBalloons}</View><Text style={styles.lives}>🍉🍉🍉</Text></TouchableOpacity></View>
         )
     }
 }
@@ -59,6 +59,11 @@ const styles = StyleSheet.create({
         height: config.screenHeight,
         backgroundColor: 'rgb(239,239,255)',
         //marginTop: config.statusBarHeight
+    },
+    lives: {
+        position: 'absolute',
+        marginTop: config.statusBarHeight,
+        marginLeft: 4
     }
 })
 

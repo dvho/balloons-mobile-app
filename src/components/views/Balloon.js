@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, View, TouchableOpacity, Animated, Easing } from 'react-native'
+import { StyleSheet, View, TouchableOpacity, Animated, Easing, Text } from 'react-native'
 import config from '../../config'
 
 //https://stackoverflow.com/questions/38053071/react-native-animated-complete-event
@@ -14,11 +14,15 @@ class Balloon extends React.PureComponent {
     }
 
     render() {
+        let specialBalloon = Math.random() * 20 < 1
+        let snowflake = Math.round(Math.random()) === 1
         let top = new Animated.Value(config.screenHeight)
-        let diameter = 30 + Math.random() * config.screenWidth / 3
+        let diameter = specialBalloon ? 30 : 30 + Math.random() * config.screenWidth / 3
         let positionFromLeft = Math.abs(diameter - Math.random() * config.screenWidth)
-        let zIndex = Math.random() * 1000
-        let balloonColor = `rgb(${Math.random()*255},${Math.random()*255},${Math.random()*255})`
+        let zIndex = specialBalloon ? 1000 : Math.random() * 1000
+        let balloonColor = specialBalloon ? 'rgb(255,255,255)' : `rgb(${Math.random()*255},${Math.random()*255},${Math.random()*255})`
+        let opacity = specialBalloon ? 1 : .5
+        let shadowOpacity = specialBalloon ? .5 : 1
 
         Animated.timing(
           top,
@@ -28,15 +32,13 @@ class Balloon extends React.PureComponent {
             userNativeDriver: true
         }).start(() => this.props.decreaseLife(this.state.touched))
 
-
-
         return(
             this.state.touched ? null
                 :
             <Animated.View style={[styles.container, {top: top, zIndex: zIndex}]}>
 
                 <TouchableOpacity onPressIn={() => {this.setState({touched: true}); this.props.increaseScore()}} activeOpacity={1} style={{left: positionFromLeft}}>
-                    <View style={[styles.balloon, {width: diameter, height: diameter, borderBottomLeftRadius: diameter, borderTopLeftRadius: diameter, borderTopRightRadius: diameter, backgroundColor: balloonColor}]}></View>
+                    <View style={[styles.balloon, {opacity: opacity, shadowOpacity: shadowOpacity, width: diameter, height: diameter, borderBottomLeftRadius: diameter, borderTopLeftRadius: diameter, borderTopRightRadius: diameter, backgroundColor: balloonColor}]}>{specialBalloon ? (snowflake ? <Text style={styles.special}>❄️</Text> : <Text style={styles.special}>🍉</Text>) : null}</View>
                 </TouchableOpacity>
 
                 <View style={[styles.string, {left: positionFromLeft, height: diameter, top: diameter / 5}]}></View>
@@ -52,11 +54,9 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     balloon: {
-        opacity: .5,
         transform: ([{ rotateZ: '45deg' }]),
         shadowColor: 'rgb(0,0,0)',
         shadowOffset: {width: 0, height: 10},
-        shadowOpacity: 1,
         shadowRadius: 4,
         elevation: 8
     },
@@ -68,9 +68,12 @@ const styles = StyleSheet.create({
         shadowOpacity: 1,
         shadowRadius: 4,
         elevation: 8
+    },
+    special: {
+        fontSize: 14,
+        marginTop: 6,
+        marginLeft: 6
     }
 })
 
 export default Balloon
-
-//Update a global store of points in redux here
