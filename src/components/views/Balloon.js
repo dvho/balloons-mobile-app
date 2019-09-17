@@ -29,15 +29,15 @@ class Balloon extends React.PureComponent {
           { toValue: 0 - config.screenHeight - diameter * 2,
             duration: 7000 + Math.random() * 6000,
             easing: Easing.bezier(0, 0, 1, 1), //this is linear because the default apparently isn't
-            userNativeDriver: true
-        }).start(() => this.props.decreaseLife(this.state.touched))
+            userNativeDriver: true //this needs to be added for Android
+        }).start(() => this.props.decreaseLife(this.state.touched)) //call the equivalent of animationEnd by having an anonymous function call decreaseLife with the argument as to whether or not it was touched or escaped
 
         return(
             this.state.touched ? null
                 :
             <Animated.View style={[styles.container, {top: top, zIndex: zIndex}]}>
 
-                <TouchableOpacity onPressIn={() => {this.setState({touched: true}); this.props.increaseScore()}} activeOpacity={1} style={{left: positionFromLeft}}>
+                <TouchableOpacity onPressIn={() => {this.setState({touched: true}); specialBalloon ? (snowflake ? this.props.blowUpSnowflake() : this.props.increaseLife()) : this.props.increaseScore()}} activeOpacity={1} style={{left: positionFromLeft}}>
                     <View style={[styles.balloon, {opacity: opacity, shadowOpacity: shadowOpacity, width: diameter, height: diameter, borderBottomLeftRadius: diameter, borderTopLeftRadius: diameter, borderTopRightRadius: diameter, backgroundColor: balloonColor}]}>{specialBalloon ? (snowflake ? <Text style={styles.special}>❄️</Text> : <Text style={styles.special}>🍉</Text>) : null}</View>
                 </TouchableOpacity>
 
