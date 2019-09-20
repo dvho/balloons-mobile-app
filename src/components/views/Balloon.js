@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, View, TouchableOpacity, Animated, Easing, Text } from 'react-native'
+import { StyleSheet, View, TouchableOpacity, Animated, Easing, Text, Image } from 'react-native'
 import config from '../../config'
 
 //https://stackoverflow.com/questions/38053071/react-native-animated-complete-event
@@ -38,7 +38,7 @@ class Balloon extends React.PureComponent {
             <Animated.View style={[styles.container, {top: top, zIndex: zIndex}]}>
 
                 <TouchableOpacity onPressIn={() => {this.setState({touched: true}); specialBalloon ? (snowflake ? this.props.blowUpSnowflake() : this.props.increaseLife()) : this.props.increaseScore()}} activeOpacity={1} style={{left: positionFromLeft}}>
-                    <View style={[styles.balloon, {opacity: opacity, shadowOpacity: shadowOpacity, width: diameter, height: diameter, borderBottomLeftRadius: diameter, borderTopLeftRadius: diameter, borderTopRightRadius: diameter, backgroundColor: balloonColor}]}>{specialBalloon ? (snowflake ? <Text style={styles.special}>❄️</Text> : <Text style={styles.special}>🍉</Text>) : null}</View>
+                    <View style={[styles.balloon, {opacity: opacity, shadowOpacity: shadowOpacity, width: diameter, height: diameter, borderBottomLeftRadius: diameter, borderTopLeftRadius: diameter, borderTopRightRadius: diameter, backgroundColor: balloonColor}]}>{specialBalloon ? (snowflake ? <Text style={styles.special}>❄️</Text> : <Text style={styles.special}>🍉</Text>) : <Image source={require('../../assets/images/gradient.png')} style={{marginLeft: diameter/12, marginTop: -diameter/12, width: diameter, height: diameter}}/>}</View>
                 </TouchableOpacity>
 
                 <View style={[styles.string, {left: positionFromLeft, height: diameter, top: diameter / 5}]}></View>
