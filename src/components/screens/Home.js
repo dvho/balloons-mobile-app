@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, View, TouchableOpacity, Text } from 'react-native'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import * as Font from 'expo-font'
-import { Balloon } from '../views'
+import { Balloon, Pop } from '../views'
 import config from '../../config'
 
 //Should cache some gif assets and have an animation running in the background that looks like daytime and one for night when the game is over
@@ -19,12 +19,18 @@ class Home extends React.Component {
             tempBalloonNumber: 0,
             score: 0,
             life: 3,
-            revealSkull: false
+            revealSkull: false,
+            x: null,
+            y: null,
+            diameter: null,
+            balloonColor: null,
+            isSnowflake: false
         }
         this.increaseScore = this.increaseScore.bind(this)
         this.decreaseLife = this.decreaseLife.bind(this)
         this.increaseLife = this.increaseLife.bind(this)
         this.blowUpSnowflake = this.blowUpSnowflake.bind(this)
+        this.sendPopParams = this.sendPopParams.bind(this)
     }
 
     restart() {
@@ -68,6 +74,16 @@ class Home extends React.Component {
         })
     }
 
+    sendPopParams(e, diameter, balloonColor, snowflake) {
+        this.setState({
+            x: e.nativeEvent.pageX,
+            y: e.nativeEvent.pageY,
+            diameter: diameter,
+            balloonColor: balloonColor,
+            isSnowflake: snowflake
+        })
+    }
+
     async componentDidMount() {
         await Font.loadAsync({
         'EncodeSansSemiExpanded-Bold': require('../../assets/fonts/EncodeSansSemiExpanded-Bold.ttf')
@@ -85,12 +101,14 @@ class Home extends React.Component {
         })()
     }
 
+    //style={{left: this.state.x - this.state.diameter/2, top: this.state.y - this.state.diameter / 2, width: this.state.diameter, height: this.state.diameter, backgroundColor: this.state.balloonColor}}
+
     render() {
         const allBalloons = []
         const lives = []
 
         for (i = 0; i < this.state.tempBalloonNumber; i++) {
-            allBalloons.push(<Balloon key={i} increaseScore={this.increaseScore} decreaseLife={this.decreaseLife} increaseLife={this.increaseLife} blowUpSnowflake={this.blowUpSnowflake}/>)
+            allBalloons.push(<Balloon key={i} increaseScore={this.increaseScore} decreaseLife={this.decreaseLife} increaseLife={this.increaseLife} blowUpSnowflake={this.blowUpSnowflake} sendPopParams={this.sendPopParams}/>)
         }
 
         for (i = 0; i < this.state.life; i++) {
@@ -106,10 +124,13 @@ class Home extends React.Component {
                         <TouchableOpacity onPress={() => this.restart()} style={{width: config.screenWidth/4}}><MaterialCommunityIcons name={'backup-restore'} size={config.screenWidth/4} color={'rgb(0,0,0)'}/></TouchableOpacity>
                     </View> }
                 { this.state.life > 0 ?
-                    <View style={{marginTop: 40, opacity: .04, backgroundColor: 'rgb(255,255,255)'}}>
+                    <View style={{marginTop: 40, opacity: .06, backgroundColor: 'rgb(255,255,255)'}}>
                         <MaterialCommunityIcons name={'skull'} size={config.screenWidth} color={'rgb(0,0,0)'}/>
                     </View> : null }
-                { this.state.life > 0 ? <View style={[styles.container, {opacity: this.state.revealSkull ? 0 : 1, backgroundColor: 'rgb(239,239,255)'}]}>{allBalloons}</View> : null }
+                { this.state.life > 0 ? <View style={[styles.container, {opacity: this.state.revealSkull ? 0 : 1, backgroundColor: 'rgb(239,239,255)'}]}>
+                    {allBalloons}
+                    <Pop x={this.state.x} y={this.state.y} diameter={this.state.diameter} balloonColor={this.state.balloonColor} snowflake={this.state.isSnowflake}/>
+                    </View> : null }
                 { this.state.life > 0 ?
                     <View style={styles.scoreBar}>
                         { this.state.fontLoaded ? <Text style={{fontFamily: 'EncodeSansSemiExpanded-Bold', fontSize: 14}}>Score: {this.state.score}</Text> : null }

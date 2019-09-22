@@ -1,3 +1,4 @@
 import Balloon from './Balloon'
+import Pop from './Pop'
 
-export { Balloon }
+export { Balloon, Pop }
