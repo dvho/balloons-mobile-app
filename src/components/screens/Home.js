@@ -118,22 +118,31 @@ class Home extends React.Component {
 
         return(
             <View>
-                <TouchableOpacity style={{width: config.screenWidth, height: config.screenHeight, backgroundColor: this.state.life > 0 ? null : 'rgb(0,64,128)'}} onPressIn={() => this.decreaseScore()} activeOpacity={this.state.life > 0 ? 0 : 1}>
+                <TouchableOpacity style={{width: config.screenWidth, height: config.screenHeight}} onPressIn={() => this.decreaseScore()} activeOpacity={this.state.life > 0 ? 0 : 1}>
+
                 { this.state.life > 0 ? null :
+                <View style={{width: config.screenWidth, height: config.screenHeight}}>
+
+                <LinearGradient colors={[`rgb(58,${255 - Math.abs(128 - (this.state.balloonNumber * 3) % 256)},255 )`, 'rgb(239,239,255)', 'rgb(255,165,0)']} style={{position: 'absolute', width: 100 + '%', height: 100 + '%'}}/>
+
+                <LinearGradient colors={['rgb(0,192,241)', 'rgb(255,255,255)']} style={{position: 'absolute', bottom: 0, width: config.screenWidth, height: config.screenWidth * .405}}/>
+
+                <Image source={require('../../assets/images/beach.png')} style={{position: 'absolute', bottom: 0, width: config.screenWidth, height: config.screenWidth * .81}}/>
+
                     <View style={{alignItems: 'center', marginTop: config.screenWidth/3}}>
                         <Text style={{fontFamily: 'EncodeSansSemiExpanded-Bold', fontSize: 24, paddingBottom: 20}}>Final Score: {this.state.score}</Text>
-                        <TouchableOpacity onPress={() => this.restart()} style={{width: config.screenWidth/4}}><MaterialCommunityIcons name={'backup-restore'} size={config.screenWidth/4} color={'rgb(0,0,0)'}/></TouchableOpacity>
-                    </View> }
+                        <TouchableOpacity onPressOut={() => this.restart()} style={{width: config.screenWidth/4.5, borderWidth: StyleSheet.hairlineWidth, borderRadius: config.screenWidth/40, borderColor: 'rgb(0,0,0)', justifyContent: 'center', alignItems: 'center'}}><MaterialCommunityIcons name={'backup-restore'} size={config.screenWidth/5} color={'rgb(0,0,0)'}/></TouchableOpacity>
+                    </View>
+                </View> }
+
                 { this.state.life > 0 ?
                     <View style={{marginTop: 40, opacity: .08, backgroundColor: 'rgb(255,255,255)'}}>
                         <MaterialCommunityIcons name={'skull'} size={config.screenWidth} color={'rgb(0,0,0)'}/>
                     </View> : null }
                 { this.state.life > 0 ? <View style={[styles.container, {opacity: this.state.revealSkull ? 0 : 1, backgroundColor: 'rgb(239,239,255)'}]}>
-                    <LinearGradient colors={[`rgb(58,${255 - Math.abs(128 - (this.state.balloonNumber * 2) % 256)},255 )`, `rgb(239,239,255)`]} style={{position: 'absolute', width: 100 + '%', height: 100 + '%'}}/>
+                    <LinearGradient colors={[`rgb(58,${255 - Math.abs(128 - (this.state.balloonNumber * 3) % 256)},255 )`, 'rgb(239,239,255)']} style={{position: 'absolute', width: 100 + '%', height: 100 + '%'}}/>
 
-                    <View style={{position: 'absolute', bottom: 0, width: config.screenWidth, height: config.screenWidth * .405, backgroundColor: 'rgb(0,192,241)'}}>
-
-                    </View>
+                    <LinearGradient colors={['rgb(0,192,241)', 'rgb(255,255,255)']} style={{position: 'absolute', bottom: 0, width: config.screenWidth, height: config.screenWidth * .405}}/>
 
                     <Image source={require('../../assets/images/beach.png')} style={{position: 'absolute', bottom: 0, width: config.screenWidth, height: config.screenWidth * .81}}/>
                     {allBalloons}

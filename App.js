@@ -42,7 +42,7 @@ class App extends React.Component {
             return (
                 <AppLoading
                   startAsync={this._loadAssetsAsync}
-                  onFinish={() => {this.setState({ isReady: true }); console.log('READY')}}
+                  onFinish={() => {this.setState({ isReady: true })}}
                   onError={console.warn}
                 />
             )
