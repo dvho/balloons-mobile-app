@@ -125,7 +125,7 @@ class Home extends React.Component {
                         <TouchableOpacity onPress={() => this.restart()} style={{width: config.screenWidth/4}}><MaterialCommunityIcons name={'backup-restore'} size={config.screenWidth/4} color={'rgb(0,0,0)'}/></TouchableOpacity>
                     </View> }
                 { this.state.life > 0 ?
-                    <View style={{marginTop: 40, opacity: .06, backgroundColor: 'rgb(255,255,255)'}}>
+                    <View style={{marginTop: 40, opacity: .08, backgroundColor: 'rgb(255,255,255)'}}>
                         <MaterialCommunityIcons name={'skull'} size={config.screenWidth} color={'rgb(0,0,0)'}/>
                     </View> : null }
                 { this.state.life > 0 ? <View style={[styles.container, {opacity: this.state.revealSkull ? 0 : 1, backgroundColor: 'rgb(239,239,255)'}]}>
