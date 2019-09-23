@@ -1,7 +1,8 @@
 import React from 'react'
-import { StyleSheet, View, TouchableOpacity, Text } from 'react-native'
-import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { StyleSheet, View, TouchableOpacity, Text, Image } from 'react-native'
+import { LinearGradient } from 'expo-linear-gradient'
 import * as Font from 'expo-font'
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { Balloon, Pop } from '../views'
 import config from '../../config'
 
@@ -70,7 +71,7 @@ class Home extends React.Component {
         this.setState({
             tempBalloonNumber: this.state.life > 0 ? 0 : this.state.tempBalloonNumber,
             score: this.state.score + 15,
-            life: this.state.life + 1 //at some point a life is being subtracted for blowing up a snowflake so makeing up for it here
+            life: this.state.life + 1 //when decreaseLife is calledback from Animation in Balloon.js when a snowflake is blown up a single life is being subtracted so making up for it here
         })
     }
 
@@ -128,6 +129,13 @@ class Home extends React.Component {
                         <MaterialCommunityIcons name={'skull'} size={config.screenWidth} color={'rgb(0,0,0)'}/>
                     </View> : null }
                 { this.state.life > 0 ? <View style={[styles.container, {opacity: this.state.revealSkull ? 0 : 1, backgroundColor: 'rgb(239,239,255)'}]}>
+                    <LinearGradient colors={[`rgb(58,${255 - Math.abs(128 - (this.state.balloonNumber * 2) % 256)},255 )`, `rgb(239,239,255)`]} style={{position: 'absolute', width: 100 + '%', height: 100 + '%'}}/>
+
+                    <View style={{position: 'absolute', bottom: 0, width: config.screenWidth, height: config.screenWidth * .405, backgroundColor: 'rgb(0,192,241)'}}>
+
+                    </View>
+
+                    <Image source={require('../../assets/images/beach.png')} style={{position: 'absolute', bottom: 0, width: config.screenWidth, height: config.screenWidth * .81}}/>
                     {allBalloons}
                     <Pop x={this.state.x} y={this.state.y} diameter={this.state.diameter} balloonColor={this.state.balloonColor} snowflake={this.state.isSnowflake}/>
                     </View> : null }

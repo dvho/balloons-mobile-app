@@ -3,6 +3,7 @@ import { StyleSheet, View, TouchableOpacity, Animated, Easing, Text, Image } fro
 import config from '../../config'
 
 //https://stackoverflow.com/questions/38053071/react-native-animated-complete-event
+//https://docs.expo.io/versions/latest/sdk/audio/
 
 class Balloon extends React.PureComponent {
 
@@ -21,8 +22,8 @@ class Balloon extends React.PureComponent {
         let positionFromLeft = Math.abs(diameter - Math.random() * config.screenWidth)
         let zIndex = specialBalloon ? 1000 : Math.random() * 1000
         let balloonColor = specialBalloon ? 'rgb(255,255,255)' : `rgb(${Math.random()*255},${Math.random()*255},${Math.random()*255})`
-        let opacity = specialBalloon ? 1 : .5
-        let shadowOpacity = specialBalloon ? .5 : 1
+        let opacity = specialBalloon ? 1 : .7 //1 : .5
+        let shadowOpacity = null //specialBalloon ? .5 : 1
 
         Animated.timing(
           top,
@@ -55,19 +56,19 @@ const styles = StyleSheet.create({
     },
     balloon: {
         transform: ([{ rotateZ: '45deg' }]),
-        shadowColor: 'rgb(0,0,0)',
-        shadowOffset: {width: 0, height: 10},
-        shadowRadius: 4,
-        elevation: 8
+        //shadowColor: 'rgb(0,0,0)',
+        //shadowOffset: {width: 0, height: 10},
+        //shadowRadius: 4,
+        //elevation: 8
     },
     string: {
         width: 1,
         borderLeftWidth: StyleSheet.hairlineWidth,
         borderColor: 'rgb(0,0,0)',
-        shadowOffset: {width: -10, height: 5},
-        shadowOpacity: 1,
-        shadowRadius: 4,
-        elevation: 8
+        //shadowOffset: {width: -10, height: 5},
+        //shadowOpacity: 1,
+        //shadowRadius: 4,
+        //elevation: 8
     },
     special: {
         fontSize: 14,
