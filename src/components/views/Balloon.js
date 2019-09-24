@@ -4,6 +4,7 @@ import config from '../../config'
 
 //https://stackoverflow.com/questions/38053071/react-native-animated-complete-event
 //https://docs.expo.io/versions/latest/sdk/audio/
+//https://ethercreative.github.io/react-native-shadow-generator/
 
 class Balloon extends React.PureComponent {
 

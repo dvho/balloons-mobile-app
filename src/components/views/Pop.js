@@ -34,8 +34,8 @@ class Pop extends React.PureComponent {
 
         Animated.timing(
           initialScale,
-          { toValue: 2.5,
-            duration: 75,
+          { toValue: 2,
+            duration: 100,
             easing: Easing.bezier(0, 0, 1, 1), //this is linear because the default apparently isn't
             userNativeDriver: true //this needs to be added for Android
         }).start()
@@ -43,7 +43,7 @@ class Pop extends React.PureComponent {
         Animated.timing(
           initialOpacity,
           { toValue: 0,
-            duration: 75,
+            duration: 125,
             easing: Easing.bezier(0, 0, 1, 1), //this is linear because the default apparently isn't
             userNativeDriver: true //this needs to be added for Android
         }).start()
