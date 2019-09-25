@@ -145,8 +145,11 @@ class Home extends React.Component {
                     <LinearGradient colors={['rgb(0,192,241)', 'rgb(255,255,255)']} style={{position: 'absolute', bottom: 0, width: config.screenWidth, height: config.screenWidth * .405}}/>
 
                     <Image source={require('../../assets/images/beach.png')} style={{position: 'absolute', bottom: 0, width: config.screenWidth, height: config.screenWidth * .81}}/>
-                    {allBalloons}
+
                     <Pop x={this.state.x} y={this.state.y} diameter={this.state.diameter} balloonColor={this.state.balloonColor} snowflake={this.state.isSnowflake}/>
+
+                    {allBalloons}
+                    
                     </View> : null }
                 { this.state.life > 0 ?
                     <View style={styles.scoreBar}>
