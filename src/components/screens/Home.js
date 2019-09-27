@@ -16,7 +16,7 @@ class Home extends React.Component {
         super()
         this.state = {
             fontLoaded: false,
-            balloonNumber: 0,
+            balloonNumber: 1200, //initialize at 1200
             tempBalloonNumber: 0,
             score: 0,
             life: 3,
@@ -93,7 +93,7 @@ class Home extends React.Component {
             fontLoaded: true
         })
         await (control = () => {
-            let timer = Math.random() * (1200 - (this.state.balloonNumber))
+            let timer = (1201 - Math.abs(1200 - this.state.balloonNumber % 2400)) //Where this.state.balloonNumber is initialized at 1200, this yo-yos between 1201 and 1 infinitely
             this.setState({
                 balloonNumber: this.state.life > 0 ? this.state.balloonNumber + 1 : this.state.balloonNumber,
                 tempBalloonNumber: this.state.life > 0 ? this.state.tempBalloonNumber + 1 : this.state.tempBalloonNumber
@@ -149,7 +149,7 @@ class Home extends React.Component {
                     <Pop x={this.state.x} y={this.state.y} diameter={this.state.diameter} balloonColor={this.state.balloonColor} snowflake={this.state.isSnowflake}/>
 
                     {allBalloons}
-                    
+
                     </View> : null }
                 { this.state.life > 0 ?
                     <View style={styles.scoreBar}>
