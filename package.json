@@ -13,7 +13,8 @@
     "react-dom": "^16.8.6",
     "react-native": "https://github.com/expo/react-native/archive/sdk-33.0.0.tar.gz",
     "react-native-status-bar-height": "^2.4.0",
-    "react-native-web": "^0.11.4"
+    "react-native-web": "^0.11.4",
+    "wishwash": "^1.0.0"
   },
   "devDependencies": {
     "babel-preset-expo": "^6.0.0"

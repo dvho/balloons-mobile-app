@@ -3,6 +3,7 @@ import { StyleSheet, View, TouchableOpacity, Text, Image } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import * as Font from 'expo-font'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
+var wishwash = require('wishwash')
 import { Balloon, Pop } from '../views'
 import config from '../../config'
 
@@ -123,7 +124,7 @@ class Home extends React.Component {
                 { this.state.life > 0 ? null :
                 <View style={{width: config.screenWidth, height: config.screenHeight}}>
 
-                <LinearGradient colors={[`rgb(58,${255 - Math.abs(192 - (this.state.balloonNumber * 3) % 386)},255 )`, 'rgb(239,239,255)', 'rgb(255,165,0)']} style={{position: 'absolute', width: 100 + '%', height: 100 + '%'}}/>
+                <LinearGradient colors={[`rgb(58,${wishwash(this.state.balloonNumber * 3, 64, 255, true)},255 )`, 'rgb(239,239,255)', 'rgb(255,165,0)']} style={{position: 'absolute', width: 100 + '%', height: 100 + '%'}}/>
 
                 <LinearGradient colors={['rgb(0,192,241)', 'rgb(255,255,255)']} style={{position: 'absolute', bottom: 0, width: config.screenWidth, height: config.screenWidth * .405}}/>
 
@@ -140,7 +141,7 @@ class Home extends React.Component {
                         <MaterialCommunityIcons name={'skull'} size={config.screenWidth} color={'rgb(0,0,0)'}/>
                     </View> : null }
                 { this.state.life > 0 ? <View style={[styles.container, {opacity: this.state.revealSkull ? 0 : 1, backgroundColor: 'rgb(239,239,255)'}]}>
-                    <LinearGradient colors={[`rgb(58,${255 - Math.abs(192 - (this.state.balloonNumber * 3) % 386)},255 )`, 'rgb(239,239,255)']} style={{position: 'absolute', width: 100 + '%', height: 100 + '%'}}/>
+                    <LinearGradient colors={[`rgb(58,${wishwash(this.state.balloonNumber * 3, 64, 255, true)},255 )`, 'rgb(239,239,255)']} style={{position: 'absolute', width: 100 + '%', height: 100 + '%'}}/>
 
                     <LinearGradient colors={['rgb(0,192,241)', 'rgb(255,255,255)']} style={{position: 'absolute', bottom: 0, width: config.screenWidth, height: config.screenWidth * .405}}/>
 
