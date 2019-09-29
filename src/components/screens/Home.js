@@ -37,7 +37,7 @@ class Home extends React.Component {
 
     restart() {
         this.setState({
-            balloonNumber: 0,
+            balloonNumber: 1200,
             tempBalloonNumber: 0,
             score: 0,
             life: 3,
@@ -106,6 +106,7 @@ class Home extends React.Component {
     //style={{left: this.state.x - this.state.diameter/2, top: this.state.y - this.state.diameter / 2, width: this.state.diameter, height: this.state.diameter, backgroundColor: this.state.balloonColor}}
 
     render() {
+        console.log(this.state.balloonNumber)
         const allBalloons = []
         const lives = []
 
