@@ -17,8 +17,8 @@ class Home extends React.Component {
         super()
         this.state = {
             fontLoaded: false,
-            balloonNumber: 1200, //initialize at 1200
-            tempBalloonNumber: 0,
+            counter: 1200, //initialize at 1200
+            balloonNumber: 0,
             score: 0,
             life: 3,
             revealSkull: false,
@@ -37,8 +37,8 @@ class Home extends React.Component {
 
     restart() {
         this.setState({
-            balloonNumber: 1200,
-            tempBalloonNumber: 0,
+            counter: 1200,
+            balloonNumber: 0,
             score: 0,
             life: 3,
             revealSkull: false
@@ -70,7 +70,7 @@ class Home extends React.Component {
 
     blowUpSnowflake() {
         this.setState({
-            tempBalloonNumber: this.state.life > 0 ? 0 : this.state.tempBalloonNumber,
+            balloonNumber: this.state.life > 0 ? 0 : this.state.balloonNumber,
             score: this.state.score + 15,
             life: this.state.life + 1 //when decreaseLife is calledback from Animation in Balloon.js when a snowflake is blown up a single life is being subtracted so making up for it here
         })
@@ -94,10 +94,10 @@ class Home extends React.Component {
             fontLoaded: true
         })
         await (control = () => {
-            let timer = Math.random() * (1201 - Math.abs(1200 - this.state.balloonNumber % 2400)) //Where this.state.balloonNumber is initialized at 1200, this yo-yos between 1201 and 1 infinitely
+            let timer = Math.random() * (1201 - Math.abs(1200 - this.state.counter % 2400)) //Where this.state.counter is initialized at 1200, this yo-yos between 1201 and 1 infinitely
             this.setState({
-                balloonNumber: this.state.life > 0 ? this.state.balloonNumber + 1 : this.state.balloonNumber,
-                tempBalloonNumber: this.state.life > 0 ? this.state.tempBalloonNumber + 1 : this.state.tempBalloonNumber
+                counter: this.state.life > 0 ? this.state.counter + 1 : this.state.counter,
+                balloonNumber: this.state.life > 0 ? this.state.balloonNumber + 1 : this.state.balloonNumber
             })
             setTimeout(control, timer)
         })()
@@ -106,11 +106,11 @@ class Home extends React.Component {
     //style={{left: this.state.x - this.state.diameter/2, top: this.state.y - this.state.diameter / 2, width: this.state.diameter, height: this.state.diameter, backgroundColor: this.state.balloonColor}}
 
     render() {
-        console.log(this.state.balloonNumber)
+        console.log(this.state.counter)
         const allBalloons = []
         const lives = []
 
-        for (i = 0; i < this.state.tempBalloonNumber; i++) {
+        for (i = 0; i < this.state.balloonNumber; i++) {
             allBalloons.push(<Balloon key={i} increaseScore={this.increaseScore} decreaseLife={this.decreaseLife} increaseLife={this.increaseLife} blowUpSnowflake={this.blowUpSnowflake} sendPopParams={this.sendPopParams}/>)
         }
 
@@ -125,7 +125,7 @@ class Home extends React.Component {
                 { this.state.life > 0 ? null :
                 <View style={{width: config.screenWidth, height: config.screenHeight}}>
 
-                <LinearGradient colors={[`rgb(58,${wishwash(this.state.balloonNumber * 3, 64, 255, true)},255 )`, 'rgb(239,239,255)', 'rgb(255,165,0)']} style={{position: 'absolute', width: 100 + '%', height: 100 + '%'}}/>
+                <LinearGradient colors={[`rgb(58,${wishwash(this.state.counter * 3, 64, 255, true)},255 )`, 'rgb(239,239,255)', 'rgb(255,165,0)']} style={{position: 'absolute', width: 100 + '%', height: 100 + '%'}}/>
 
                 <LinearGradient colors={['rgb(0,192,241)', 'rgb(255,255,255)']} style={{position: 'absolute', bottom: 0, width: config.screenWidth, height: config.screenWidth * .405}}/>
 
@@ -142,7 +142,7 @@ class Home extends React.Component {
                         <MaterialCommunityIcons name={'skull'} size={config.screenWidth} color={'rgb(0,0,0)'}/>
                     </View> : null }
                 { this.state.life > 0 ? <View style={[styles.container, {opacity: this.state.revealSkull ? 0 : 1, backgroundColor: 'rgb(239,239,255)'}]}>
-                    <LinearGradient colors={[`rgb(58,${wishwash(this.state.balloonNumber * 3, 64, 255, true)},255 )`, 'rgb(239,239,255)']} style={{position: 'absolute', width: 100 + '%', height: 100 + '%'}}/>
+                    <LinearGradient colors={[`rgb(58,${wishwash(this.state.counter * 3, 64, 255, true)},255 )`, 'rgb(239,239,255)']} style={{position: 'absolute', width: 100 + '%', height: 100 + '%'}}/>
 
                     <LinearGradient colors={['rgb(0,192,241)', 'rgb(255,255,255)']} style={{position: 'absolute', bottom: 0, width: config.screenWidth, height: config.screenWidth * .405}}/>
 
