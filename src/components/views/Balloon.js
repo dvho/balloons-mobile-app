@@ -1,6 +1,8 @@
 import React from 'react'
-import { StyleSheet, View, TouchableOpacity, Animated, Easing, Text, Image } from 'react-native'
+import { StyleSheet, View, Platform, TouchableOpacity, TouchableNativeFeedback, Animated, Easing, Text, Image } from 'react-native'
 import config from '../../config'
+
+//TouchableOpacity doesn't work inside a parent with position absolute on Android (this is a react native bug) but TouchableNativeFeedback does. TouchableNativeFeedback doesn't work at all on iOS so I had to place two different blocks of JSX inside a ternary in my render method
 
 //https://stackoverflow.com/questions/38053071/react-native-animated-complete-event
 //https://docs.expo.io/versions/latest/sdk/audio/
@@ -35,8 +37,25 @@ class Balloon extends React.PureComponent {
         }).start(() => this.props.decreaseLife(this.state.touched)) //call the equivalent of animationEnd by having an anonymous function call decreaseLife with the argument as to whether or not it was touched or escaped
 
         return(
+
             this.state.touched ? null
-                :
+
+            :
+
+            Platform.OS !== 'ios' ?
+
+            <Animated.View style={[styles.container, {left: positionFromLeft, top: top, zIndex: zIndex}]}>
+
+                <TouchableNativeFeedback onPressIn={(e) => {this.setState({touched: true}); this.props.sendPopParams(e, diameter, balloonColor, snowflake && specialBalloon); specialBalloon ? (snowflake ? this.props.blowUpSnowflake() : this.props.increaseLife()) : this.props.increaseScore()}} activeOpacity={1} style={{left: positionFromLeft}}>
+                    <View style={[styles.balloon, {opacity: opacity, shadowOpacity: shadowOpacity, width: diameter, height: diameter, borderBottomLeftRadius: diameter, borderTopLeftRadius: diameter, borderTopRightRadius: diameter, backgroundColor: balloonColor}]}>{specialBalloon ? (snowflake ? <Text style={styles.special}>❄️</Text> : <Text style={styles.special}>🍉</Text>) : <Image source={require('../../assets/images/balloon-radial-gradient.png')} style={{marginLeft: diameter/12, marginTop: -diameter/12, width: diameter, height: diameter}}/>}</View>
+                </TouchableNativeFeedback>
+
+                <View style={[styles.string, {height: diameter, top: diameter / 5}]}></View>
+
+            </Animated.View>
+
+            :
+
             <Animated.View style={[styles.container, {top: top, zIndex: zIndex}]}>
 
                 <TouchableOpacity onPressIn={(e) => {this.setState({touched: true}); this.props.sendPopParams(e, diameter, balloonColor, snowflake && specialBalloon); specialBalloon ? (snowflake ? this.props.blowUpSnowflake() : this.props.increaseLife()) : this.props.increaseScore()}} activeOpacity={1} style={{left: positionFromLeft}}>
@@ -46,6 +65,7 @@ class Balloon extends React.PureComponent {
                 <View style={[styles.string, {left: positionFromLeft, height: diameter, top: diameter / 5}]}></View>
 
             </Animated.View>
+
         )
     }
 }

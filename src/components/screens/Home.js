@@ -7,6 +7,7 @@ var wishwash = require('wishwash')
 import { Balloon, Pop } from '../views'
 import config from '../../config'
 
+//Get expo running on AndroidStudio emulator: https://www.youtube.com/watch?v=Q0dERWCzoi0, https://docs.expo.io/versions/latest/workflow/android-studio-emulator/
 //Should cache some gif assets and have an animation running in the background that looks like daytime and one for night when the game is over
 //Font for score
 //Balloon pop animation
@@ -106,7 +107,6 @@ class Home extends React.Component {
     //style={{left: this.state.x - this.state.diameter/2, top: this.state.y - this.state.diameter / 2, width: this.state.diameter, height: this.state.diameter, backgroundColor: this.state.balloonColor}}
 
     render() {
-        console.log(this.state.counter)
         const allBalloons = []
         const lives = []
 
