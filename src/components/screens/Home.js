@@ -4,13 +4,12 @@ import { LinearGradient } from 'expo-linear-gradient'
 import * as Font from 'expo-font'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 var wishwash = require('wishwash')
-import { Balloon, Pop } from '../views'
+import { Balloon, Pop, Cloud } from '../views'
 import config from '../../config'
 
 //Get expo running on AndroidStudio emulator: https://www.youtube.com/watch?v=Q0dERWCzoi0, https://docs.expo.io/versions/latest/workflow/android-studio-emulator/
-//Should cache some gif assets and have an animation running in the background that looks like daytime and one for night when the game is over
-//Font for score
-//Balloon pop animation
+//make a linearTimer and use its Math.random output to calc random clouds as well as special balloons (no longer use random function within Balloon.js to calc special balloons)
+
 
 class Home extends React.Component {
 
@@ -20,6 +19,7 @@ class Home extends React.Component {
             fontLoaded: false,
             counter: 1200, //initialize at 1200
             balloonNumber: 0,
+            cloudNumber: 0,
             score: 0,
             life: 3,
             revealSkull: false,
@@ -94,24 +94,37 @@ class Home extends React.Component {
         await this.setState({
             fontLoaded: true
         })
-        await (control = () => {
-            let timer = Math.random() * (1201 - Math.abs(1200 - this.state.counter % 2400)) //Where this.state.counter is initialized at 1200, this yo-yos between 1201 and 1 infinitely
+        await (wishwashControl = () => {
+            let wishwashTimer = Math.random() * wishwash(this.state.counter, 1, 1200, true) //Where this.state.counter is initialized at 1200, this yo-yos between 1201 and 1 infinitely
+
             this.setState({
                 counter: this.state.life > 0 ? this.state.counter + 1 : this.state.counter,
                 balloonNumber: this.state.life > 0 ? this.state.balloonNumber + 1 : this.state.balloonNumber
             })
-            setTimeout(control, timer)
+            setTimeout(wishwashControl, wishwashTimer)
+        })()
+        await (linearControl = () => {
+            let repeatRate = Math.random() * 15000
+
+            this.setState({
+                cloudNumber: this.state.cloudNumber + 1
+            })
+            setTimeout(linearControl, repeatRate)
         })()
     }
 
-    //style={{left: this.state.x - this.state.diameter/2, top: this.state.y - this.state.diameter / 2, width: this.state.diameter, height: this.state.diameter, backgroundColor: this.state.balloonColor}}
-
     render() {
+        console.log(this.state.balloonNumber)
         const allBalloons = []
+        const allClouds = []
         const lives = []
 
         for (i = 0; i < this.state.balloonNumber; i++) {
             allBalloons.push(<Balloon key={i} increaseScore={this.increaseScore} decreaseLife={this.decreaseLife} increaseLife={this.increaseLife} blowUpSnowflake={this.blowUpSnowflake} sendPopParams={this.sendPopParams}/>)
+        }
+
+        for (i = 0; i < this.state.cloudNumber; i++) {
+            allClouds.push(<Cloud key={i}/>)
         }
 
         for (i = 0; i < this.state.life; i++) {
@@ -125,7 +138,7 @@ class Home extends React.Component {
                 { this.state.life > 0 ? null :
                 <View style={{width: config.screenWidth, height: config.screenHeight}}>
 
-                <LinearGradient colors={[`rgb(58,${wishwash(this.state.counter * 3, 64, 255, true)},255 )`, 'rgb(239,239,255)', 'rgb(255,165,0)']} style={{position: 'absolute', width: 100 + '%', height: 100 + '%'}}/>
+                <LinearGradient colors={[`rgb(58,${wishwash(this.state.counter * 3, 32, 255, true)},255 )`, 'rgb(239,239,255)', 'rgb(255,165,0)']} style={{position: 'absolute', width: 100 + '%', height: 100 + '%'}}/>
 
                 <LinearGradient colors={['rgb(0,192,241)', 'rgb(255,255,255)']} style={{position: 'absolute', bottom: 0, width: config.screenWidth, height: config.screenWidth * .405}}/>
 
@@ -142,7 +155,9 @@ class Home extends React.Component {
                         <MaterialCommunityIcons name={'skull'} size={config.screenWidth} color={'rgb(0,0,0)'}/>
                     </View> : null }
                 { this.state.life > 0 ? <View style={[styles.container, {opacity: this.state.revealSkull ? 0 : 1, backgroundColor: 'rgb(239,239,255)'}]}>
-                    <LinearGradient colors={[`rgb(58,${wishwash(this.state.counter * 3, 64, 255, true)},255 )`, 'rgb(239,239,255)']} style={{position: 'absolute', width: 100 + '%', height: 100 + '%'}}/>
+                    <LinearGradient colors={[`rgb(58,${wishwash(this.state.counter * 3, 32, 255, true)},255 )`, 'rgb(239,239,255)']} style={{position: 'absolute', width: 100 + '%', height: 100 + '%'}}/>
+
+                    {allClouds}
 
                     <LinearGradient colors={['rgb(0,192,241)', 'rgb(255,255,255)']} style={{position: 'absolute', bottom: 0, width: config.screenWidth, height: config.screenWidth * .405}}/>
 
