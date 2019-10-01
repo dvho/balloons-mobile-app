@@ -40,6 +40,7 @@ class Home extends React.Component {
         this.setState({
             counter: 1200,
             balloonNumber: 0,
+            cloudNumber: 0,
             score: 0,
             life: 3,
             revealSkull: false
@@ -114,7 +115,6 @@ class Home extends React.Component {
     }
 
     render() {
-        console.log(this.state.balloonNumber)
         const allBalloons = []
         const allClouds = []
         const lives = []
