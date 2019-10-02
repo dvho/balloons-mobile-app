@@ -4,7 +4,7 @@ import { LinearGradient } from 'expo-linear-gradient'
 import * as Font from 'expo-font'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 var wishwash = require('wishwash')
-import { Balloon, Pop, Cloud } from '../views'
+import { Balloon, Pop, Cloud, InitialCloud } from '../views'
 import config from '../../config'
 
 //Get expo running on AndroidStudio emulator: https://www.youtube.com/watch?v=Q0dERWCzoi0, https://docs.expo.io/versions/latest/workflow/android-studio-emulator/
@@ -40,7 +40,6 @@ class Home extends React.Component {
         this.setState({
             counter: 1200,
             balloonNumber: 0,
-            cloudNumber: 0,
             score: 0,
             life: 3,
             revealSkull: false
@@ -105,7 +104,7 @@ class Home extends React.Component {
             setTimeout(wishwashControl, wishwashTimer)
         })()
         await (linearControl = () => {
-            let repeatRate = Math.random() * 15000
+            let repeatRate = Math.random() * 10000
 
             this.setState({
                 cloudNumber: this.state.cloudNumber + 1
@@ -116,11 +115,16 @@ class Home extends React.Component {
 
     render() {
         const allBalloons = []
+        const allInitialClouds = []
         const allClouds = []
         const lives = []
 
         for (i = 0; i < this.state.balloonNumber; i++) {
             allBalloons.push(<Balloon key={i} increaseScore={this.increaseScore} decreaseLife={this.decreaseLife} increaseLife={this.increaseLife} blowUpSnowflake={this.blowUpSnowflake} sendPopParams={this.sendPopParams}/>)
+        }
+
+        for (i = 0; i < 15; i++) {
+            allInitialClouds.push(<InitialCloud key={i}/>)
         }
 
         for (i = 0; i < this.state.cloudNumber; i++) {
@@ -157,6 +161,7 @@ class Home extends React.Component {
                 { this.state.life > 0 ? <View style={[styles.container, {opacity: this.state.revealSkull ? 0 : 1, backgroundColor: 'rgb(239,239,255)'}]}>
                     <LinearGradient colors={[`rgb(58,${wishwash(this.state.counter * 3, 32, 255, true)},255 )`, 'rgb(239,239,255)']} style={{position: 'absolute', width: 100 + '%', height: 100 + '%'}}/>
 
+                    {allInitialClouds}
                     {allClouds}
 
                     <LinearGradient colors={['rgb(0,192,241)', 'rgb(255,255,255)']} style={{position: 'absolute', bottom: 0, width: config.screenWidth, height: config.screenWidth * .405}}/>

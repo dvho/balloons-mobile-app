@@ -3,6 +3,8 @@ import { View, Animated, Easing } from 'react-native'
 import { AntDesign, Entypo, FontAwesome, Ionicons, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons'
 import config from '../../config'
 
+//This entirely new component had to be created because when I tired to pass a property to Cloud.js designating that the cloud to be rendered was initial vs not initial it erased all initial clouds as soon as initial went from true to false in the state of Home.js. Even after a setTimeout of 20000, Cloud.js's rendered with this.props.initialCloud === true disappeared as soon as this.props.initialCloud became false. After many failed workarounds the only thing that worked was to clone and rename Cloud.js in this manner.
+
 //AndDesign - cloud
 //Entypo - cloud
 //FontAwesome - cloud
@@ -12,7 +14,7 @@ import config from '../../config'
 //MaterialIcons - wb-cloudy
 //MaterialCommunityIcons - apple-icloud, cloud
 
-class Cloud extends React.PureComponent {
+class InitialCloud extends React.PureComponent {
 
     constructor() {
         super()
@@ -31,7 +33,7 @@ class Cloud extends React.PureComponent {
         let color = Math.floor(Math.random() * 360)
         let size = 3 + Math.floor(Math.random() * 4)
         let opacity = .5 + Math.random() * .5
-        let left = new Animated.Value(config.screenWidth)
+        let left = new Animated.Value(config.screenWidth * Math.random())
 
         Animated.timing(
           left,
@@ -49,4 +51,4 @@ class Cloud extends React.PureComponent {
     }
 }
 
-export default Cloud
+export default InitialCloud

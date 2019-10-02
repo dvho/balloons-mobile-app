@@ -30,8 +30,8 @@ class Balloon extends React.PureComponent {
 
         Animated.timing(
           top,
-          { toValue: 0 - config.screenHeight - diameter * 2,
-            duration: 7000 + Math.random() * 6000,
+          { toValue: 0 - diameter * 3,
+            duration: 5000 + Math.random() * 4000,
             easing: Easing.bezier(0, 0, 1, 1), //this is linear because the default apparently isn't
             userNativeDriver: true //this needs to be added for Android
         }).start(() => this.props.decreaseLife(this.state.touched)) //call the equivalent of animationEnd by having an anonymous function call decreaseLife with the argument as to whether or not it was touched or escaped
