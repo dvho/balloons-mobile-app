@@ -123,7 +123,7 @@ class Home extends React.Component {
             allBalloons.push(<Balloon key={i} increaseScore={this.increaseScore} decreaseLife={this.decreaseLife} increaseLife={this.increaseLife} blowUpSnowflake={this.blowUpSnowflake} sendPopParams={this.sendPopParams}/>)
         }
 
-        for (i = 0; i < 15; i++) {
+        for (i = 0; i < 13; i++) {
             allInitialClouds.push(<InitialCloud key={i}/>)
         }
 

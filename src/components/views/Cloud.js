@@ -36,7 +36,7 @@ class Cloud extends React.PureComponent {
         Animated.timing(
           left,
           { toValue: 0 - config.screenWidth/size,
-            duration: 70000 + Math.random() * 20000,
+            duration: 50000 + Math.random() * 50000,
             easing: Easing.bezier(0, 0, 1, 1), //this is linear because the default apparently isn't
             userNativeDriver: true //this needs to be added for Android
         }).start()
