@@ -54,6 +54,4 @@ class Pop extends React.PureComponent {
     }
 }
 
-
-
 export default Pop

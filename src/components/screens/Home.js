@@ -10,7 +10,6 @@ import config from '../../config'
 //Get expo running on AndroidStudio emulator: https://www.youtube.com/watch?v=Q0dERWCzoi0, https://docs.expo.io/versions/latest/workflow/android-studio-emulator/
 //make a linearTimer and use its Math.random output to calc random clouds as well as special balloons (no longer use random function within Balloon.js to calc special balloons)
 
-
 class Home extends React.Component {
 
     constructor() {
@@ -40,6 +39,7 @@ class Home extends React.Component {
         this.setState({
             counter: 1200,
             balloonNumber: 0,
+            cloudNumber: 0,
             score: 0,
             life: 3,
             revealSkull: false

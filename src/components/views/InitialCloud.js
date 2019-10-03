@@ -3,6 +3,8 @@ import { View, Animated, Easing } from 'react-native'
 import { AntDesign, Entypo, FontAwesome, Ionicons, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons'
 import config from '../../config'
 
+//initialClouds are disappearing too early...
+
 //This entirely new component had to be created because when I tired to pass a property to Cloud.js designating that the cloud to be rendered was initial vs not initial it erased all initial clouds as soon as initial went from true to false in the state of Home.js. Even after a setTimeout of 20000, Cloud.js's rendered with this.props.initialCloud === true disappeared as soon as this.props.initialCloud became false. After many failed workarounds the only thing that worked was to clone and rename Cloud.js in this manner.
 
 //AndDesign - cloud
@@ -19,7 +21,7 @@ class InitialCloud extends React.PureComponent {
     constructor() {
         super()
         this.state = {
-            finishedCloud: false //Need to trigger this qualifier in state and use it to remove clouds from the virtual DOM with a display 'none' in an inline ternary operator, otherwise the off-screen clouds keep re-rendering and the game fatally stutters and lags.
+            finishedCloud: false
         }
         this.clouds = [{suite: AntDesign, name: 'cloud'}, {suite: Entypo, name: 'cloud'}, {suite: FontAwesome, name: 'cloud'}, {suite: Ionicons, name: 'ios-cloud'}, {suite: Ionicons, name: 'ios-cloudy'}, {suite: Ionicons, name: 'md-cloud'}, {suite: MaterialIcons, name: 'cloud'}, {suite: MaterialIcons, name: 'wb-cloudy'}, {suite: MaterialCommunityIcons, name: 'apple-icloud'}, {suite: MaterialCommunityIcons, name: 'cloud'}]
     }
@@ -31,16 +33,18 @@ class InitialCloud extends React.PureComponent {
         let IconComponent = this.clouds[selection].suite
         let name = this.clouds[selection].name
 
+        let randomCoef = Math.random()
+
         let flipped = Math.ceil(Math.random() * 2) === 2
         let color = Math.floor(Math.random() * 360)
         let size = 3 + Math.floor(Math.random() * 4)
         let opacity = .5 + Math.random() * .5
-        let left = new Animated.Value(config.screenWidth * Math.random())
+        let left = new Animated.Value(config.screenWidth * randomCoef)
 
         Animated.timing(
           left,
-          { toValue: 0 - config.screenWidth/size,
-            duration: 60000 + Math.random() * 60000,
+          { toValue: 0 - config.screenWidth,
+            duration: 100000 + Math.random() * 100000 * randomCoef,
             easing: Easing.bezier(0, 0, 1, 1), //this is linear because the default apparently isn't
             userNativeDriver: true //this needs to be added for Android
         }).start(() => this.setState({finishedCloud: true}))
