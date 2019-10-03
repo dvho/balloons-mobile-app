@@ -31,6 +31,7 @@ class InitialCloud extends React.PureComponent {
         let IconComponent = this.clouds[selection].suite
         let name = this.clouds[selection].name
 
+        let flipped = Math.ceil(Math.random() * 2) === 2
         let color = Math.floor(Math.random() * 360)
         let size = 3 + Math.floor(Math.random() * 4)
         let opacity = .5 + Math.random() * .5
@@ -46,7 +47,7 @@ class InitialCloud extends React.PureComponent {
 
         return(
             <Animated.View style={{display: this.state.finishedCloud ? 'none' : null, left: left, position: 'absolute', width: 100 + '%', height: 100 + '%', justifyContent: 'flex-end'}}>
-                <IconComponent name={name} size={config.screenWidth/size} style={{bottom: config.screenWidth * .25, color: `hsl(${color}, 100%, 94%))`, opacity: opacity, shadowColor: 'rgb(255,255,255)', shadowOpacity: 1, shadowOffset: {width: 0, height: 0}, shadowRadius: 10}}/>
+                <IconComponent name={name} size={config.screenWidth/size} style={{transform: flipped ? [{rotateY: '180deg'}] : [{rotateY: '0deg'}], bottom: config.screenWidth * .25, color: `hsl(${color}, 100%, 94%))`, opacity: opacity, shadowColor: 'rgb(255,255,255)', shadowOpacity: 1, shadowOffset: {width: 0, height: 0}, shadowRadius: 10}}/>
             </Animated.View>
         )
     }
