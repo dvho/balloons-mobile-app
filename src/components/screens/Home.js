@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, View, TouchableOpacity, Text, Image } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import * as Font from 'expo-font'
-import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons'
 var wishwash = require('wishwash')
 import { Balloon, Pop, Cloud, InitialCloud } from '../views'
 import config from '../../config'
@@ -16,6 +16,7 @@ class Home extends React.Component {
         super()
         this.state = {
             fontLoaded: false,
+            sound: false,
             counter: 1200, //initialize at 1200
             balloonNumber: 0,
             cloudNumber: 0,
@@ -168,7 +169,7 @@ class Home extends React.Component {
 
                     <Image source={require('../../assets/images/beach.png')} style={{position: 'absolute', bottom: 0, width: config.screenWidth, height: config.screenWidth * .81}}/>
 
-                    <Pop x={this.state.x} y={this.state.y} diameter={this.state.diameter} balloonColor={this.state.balloonColor} snowflake={this.state.isSnowflake}/>
+                    <Pop x={this.state.x} y={this.state.y} sound={this.state.sound} diameter={this.state.diameter} balloonColor={this.state.balloonColor} snowflake={this.state.isSnowflake}/>
 
                     {allBalloons}
 
@@ -177,6 +178,9 @@ class Home extends React.Component {
                     <View style={styles.scoreBar}>
                         { this.state.fontLoaded ? <Text style={{fontFamily: 'EncodeSansSemiExpanded-Bold', fontSize: 14}}>Score: {this.state.score}</Text> : null }
                         <Text style={styles.lives}>{lives}</Text>
+                        <TouchableOpacity onPress={() => this.setState({sound: !this.state.sound})} style={styles.soundToggle}>
+                            <Ionicons name={this.state.sound ? 'ios-volume-high' : 'ios-volume-off'} size={40} color={'rgb(0,0,0)'} style={{opacity: this.state.sound ? 1 : .3}}/>
+                        </TouchableOpacity>
                     </View> : null }
                 </TouchableOpacity>
             </View>
@@ -194,13 +198,22 @@ const styles = StyleSheet.create({
     scoreBar: {
         flexDirection: 'column',
         position: 'absolute',
-        width: config.screenWidth,
+        width: config.screenWidth - 90, //This leaves room for soundToggle not to be covered by watermelons
         alignItems: 'center',
+        marginLeft: 45, //This leaves room for soundToggle not to be covered by watermelons
         marginTop: config.statusBarHeight
     },
+    soundToggle: {
+        position: 'absolute',
+        paddingHorizontal: 10,
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        width: config.screenWidth
+    },
     lives: {
-        paddingLeft: 4,
-        fontSize: 16
+        paddingLeft: 7,
+        fontSize: 16,
+        marginLeft: -45 //This counters leaving room for soundToggle not to be covered by watermelons
     }
 })
 

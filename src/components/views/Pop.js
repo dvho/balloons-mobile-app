@@ -12,24 +12,21 @@ class Pop extends React.PureComponent {
 
     async playSound() {
 
-        if (this.props.diameter === null) {
-            return
-        }
-
         const pitchConstant = this.props.snowflake ? 1 : this.props.diameter / 120
+        const unloadRate = this.props.snowflake ? 7000 : 1500
         const soundObject = new Audio.Sound()
 
         try {
             await soundObject.loadAsync(this.props.snowflake ? require('../../assets/sounds/explosion.mp3') : require('../../assets/sounds/pop.mp3'))
             this.pop = soundObject
                 this.pop.setPositionAsync(0)
-                this.pop.setRateAsync(2 - pitchConstant, false, Audio.PitchCorrectionQuality.High)
+                this.pop.setRateAsync(2 - pitchConstant, false, Audio.PitchCorrectionQuality.Low)
                 this.pop.playAsync()
-                //The below occasionally mutes pops, so commenting out but keeping it for reference
+                //Technically, the setTimeout rate should be playbackStatus.playableDurationMillis but it seems to be calculating that before the sound pitch/rate are set so I've manually made it 2000
                 .then(async playbackStatus => {
     				setTimeout(() => {
     					soundObject.unloadAsync()
-    				}, playbackStatus.playableDurationMillis)
+    				}, unloadRate)
     			})
     			.catch(error => {
     				console.log(error)
@@ -41,7 +38,7 @@ class Pop extends React.PureComponent {
 
     render() {
 
-        this.playSound()
+        (this.props.sound && this.props.diameter !== null) ? this.playSound() : null
 
         let initialOpacity = new Animated.Value(.5)
         let initialScale = new Animated.Value(.001)
