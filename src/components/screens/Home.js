@@ -17,7 +17,7 @@ class Home extends React.Component {
         this.state = {
             fontLoaded: false,
             sound: false,
-            counter: 1200, //initialize at 1200
+            counter: 1200, //initialize at 1200 
             balloonNumber: 0,
             cloudNumber: 0,
             score: 0,

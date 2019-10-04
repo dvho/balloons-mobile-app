@@ -25,7 +25,7 @@ class App extends React.Component {
     cacheImages(images) {
         return images.map(image => {
             if (typeof image === 'string') {
-                //Just putting this as a placeholder for future use in case I later choose to include a URL in the allImages array above
+                //Just putting this as a placeholder for future use in case I later choose to include a URL in the allImages array above 
                 return Image.prefetch(image)
             } else {
                 return Asset.fromModule(image).downloadAsync()

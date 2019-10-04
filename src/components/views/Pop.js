@@ -22,7 +22,7 @@ class Pop extends React.PureComponent {
                 this.pop.setPositionAsync(0)
                 this.pop.setRateAsync(2 - pitchConstant, false, Audio.PitchCorrectionQuality.Low)
                 this.pop.playAsync()
-                //Technically, the setTimeout rate should be playbackStatus.playableDurationMillis but it seems to be calculating that before the sound pitch/rate are set so I've manually made it 2000
+                //Technically, the setTimeout rate should be playbackStatus.playableDurationMillis but it seems to be calculating that before the sound pitch/rate are set so I've manually made it 2000 
                 .then(async playbackStatus => {
     				setTimeout(() => {
     					soundObject.unloadAsync()

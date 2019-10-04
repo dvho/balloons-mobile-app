@@ -34,7 +34,7 @@ class Balloon extends React.PureComponent {
             duration: 5000 + Math.random() * 4000,
             easing: Easing.bezier(0, 0, 1, 1), //this is linear because the default apparently isn't
             userNativeDriver: true //this needs to be added for Android
-        }).start(() => this.props.decreaseLife(this.state.touched)) //call the equivalent of animationEnd by having an anonymous function call decreaseLife with the argument as to whether or not it was touched or escaped
+        }).start(() => this.props.decreaseLife(this.state.touched)) //call the equivalent of animationEnd by having an anonymous function call decreaseLife with the argument as to whether or not it was touched or escaped 
 
         return(
 
