@@ -27,7 +27,8 @@ class Home extends React.Component {
             y: null,
             diameter: null,
             balloonColor: null,
-            isSnowflake: false
+            isSnowflake: false,
+            isWatermelon: false
         }
         this.increaseScore = this.increaseScore.bind(this)
         this.decreaseLife = this.decreaseLife.bind(this)
@@ -78,13 +79,14 @@ class Home extends React.Component {
         })
     }
 
-    sendPopParams(e, diameter, balloonColor, snowflake) {
+    sendPopParams(e, diameter, balloonColor, snowflake, watermelon) {
         this.setState({
             x: e.nativeEvent.pageX,
             y: e.nativeEvent.pageY,
             diameter: diameter,
             balloonColor: balloonColor,
-            isSnowflake: snowflake
+            isSnowflake: snowflake,
+            isWatermelon: watermelon
         })
     }
 
@@ -169,7 +171,7 @@ class Home extends React.Component {
 
                     <Image source={require('../../assets/images/beach.png')} style={{position: 'absolute', bottom: 0, width: config.screenWidth, height: config.screenWidth * .81}}/>
 
-                    <Pop x={this.state.x} y={this.state.y} sound={this.state.sound} diameter={this.state.diameter} balloonColor={this.state.balloonColor} snowflake={this.state.isSnowflake}/>
+                    <Pop x={this.state.x} y={this.state.y} sound={this.state.sound} diameter={this.state.diameter} balloonColor={this.state.balloonColor} snowflake={this.state.isSnowflake} watermelon={this.state.isWatermelon}/>
 
                     {allBalloons}
 

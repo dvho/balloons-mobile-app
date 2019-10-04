@@ -5,7 +5,7 @@ import * as Font from 'expo-font'
 import { Asset, Image } from 'expo-asset'
 const allFonts = [require('./src/assets/fonts/EncodeSansSemiExpanded-Bold.ttf')]
 const allImages = [require('./src/assets/images/balloon-radial-gradient.png'), require('./src/assets/images/beach.png')]
-const allSounds = [require('./src/assets/sounds/pop.mp3'), require('./src/assets/sounds/explosion.mp3')]
+const allSounds = [require('./src/assets/sounds/pop.mp3'), require('./src/assets/sounds/explosion.mp3'), require('./src/assets/sounds/ching.mp3')]
 
 class App extends React.Component {
 
