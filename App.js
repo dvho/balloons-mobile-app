@@ -5,6 +5,7 @@ import * as Font from 'expo-font'
 import { Asset, Image } from 'expo-asset'
 const allFonts = [require('./src/assets/fonts/EncodeSansSemiExpanded-Bold.ttf')]
 const allImages = [require('./src/assets/images/balloon-radial-gradient.png'), require('./src/assets/images/beach.png')]
+const allSounds = [require('./src/assets/sounds/pop.mp3')]
 
 class App extends React.Component {
 
@@ -17,9 +18,14 @@ class App extends React.Component {
         this.cacheFonts = this.cacheFonts.bind(this)
     }
 
+    cacheSounds(sounds) {
+        return sounds.map(sound => Asset.fromModule(sound).downloadAsync())
+    }
+
     cacheImages(images) {
         return images.map(image => {
             if (typeof image === 'string') {
+                //Just putting this as a placeholder for future use in case I later choose to include a URL in the allImages array above
                 return Image.prefetch(image)
             } else {
                 return Asset.fromModule(image).downloadAsync()
@@ -32,9 +38,10 @@ class App extends React.Component {
     }
 
     _loadAssetsAsync = async () => {
+        const soundAssets = await this.cacheSounds(allSounds)
         const imageAssets = await this.cacheImages(allImages)
         const fontAssets = await this.cacheFonts(allFonts)
-        return Promise.all([...imageAssets, ...fontAssets])
+        return Promise.all([...soundAssets, ...imageAssets, ...fontAssets])
     }
 
     render() {
