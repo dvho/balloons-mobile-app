@@ -16,24 +16,24 @@ class Pop extends React.PureComponent {
             return
         }
 
-        const pitchConstant = this.props.diameter / 120
+        const pitchConstant = this.props.snowflake ? 1 : this.props.diameter / 120
         const soundObject = new Audio.Sound()
 
         try {
-            await soundObject.loadAsync(require('../../assets/sounds/pop.mp3'))
+            await soundObject.loadAsync(this.props.snowflake ? require('../../assets/sounds/explosion.mp3') : require('../../assets/sounds/pop.mp3'))
             this.pop = soundObject
                 this.pop.setPositionAsync(0)
                 this.pop.setRateAsync(2 - pitchConstant, false, Audio.PitchCorrectionQuality.High)
                 this.pop.playAsync()
                 //The below occasionally mutes pops, so commenting out but keeping it for reference
-                // .then(async playbackStatus => {
-    			// 	setTimeout(() => {
-    			// 		soundObject.unloadAsync()
-    			// 	}, playbackStatus.playableDurationMillis)
-    			// })
-    			// .catch(error => {
-    			// 	console.log(error)
-    			// })
+                .then(async playbackStatus => {
+    				setTimeout(() => {
+    					soundObject.unloadAsync()
+    				}, playbackStatus.playableDurationMillis)
+    			})
+    			.catch(error => {
+    				console.log(error)
+    			})
         } catch (error) {
               console.log(error)
         }
