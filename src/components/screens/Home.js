@@ -198,9 +198,8 @@ const styles = StyleSheet.create({
     scoreBar: {
         flexDirection: 'column',
         position: 'absolute',
-        width: config.screenWidth - 90, //This leaves room for soundToggle not to be covered by watermelons
+        width: config.screenWidth,
         alignItems: 'center',
-        marginLeft: 45, //This leaves room for soundToggle not to be covered by watermelons
         marginTop: config.statusBarHeight
     },
     soundToggle: {
@@ -212,8 +211,7 @@ const styles = StyleSheet.create({
     },
     lives: {
         paddingLeft: 7,
-        fontSize: 16,
-        marginLeft: -45 //This counters leaving room for soundToggle not to be covered by watermelons
+        fontSize: 16
     }
 })
 
