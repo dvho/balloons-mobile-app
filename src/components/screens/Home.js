@@ -3,6 +3,7 @@ import { StyleSheet, View, TouchableOpacity, Text, Image } from 'react-native'
 import { LinearGradient } from 'expo-linear-gradient'
 import * as Font from 'expo-font'
 import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons'
+import { Audio } from 'expo-av'
 var wishwash = require('wishwash')
 import { Balloon, Pop, Cloud, InitialCloud } from '../views'
 import config from '../../config'
@@ -16,8 +17,10 @@ class Home extends React.Component {
         super()
         this.state = {
             fontLoaded: false,
-            sound: false,
-            counter: 1200, //initialize at 1200 
+            sound: true,
+            endMusicIsPlaying: false,
+            gruntNumber: Math.ceil(Math.random() * 9),
+            counter: 1200, //initialize at 1200
             balloonNumber: 0,
             cloudNumber: 0,
             score: 0,
@@ -37,8 +40,10 @@ class Home extends React.Component {
         this.sendPopParams = this.sendPopParams.bind(this)
     }
 
-    restart() {
+    async restart() {
         this.setState({
+            endMusicIsPlaying: false,
+            gruntNumber: Math.ceil(Math.random() * 9),
             counter: 1200,
             balloonNumber: 0,
             cloudNumber: 0,
@@ -46,16 +51,17 @@ class Home extends React.Component {
             life: 3,
             revealSkull: false
         })
+        await this.endMusic.stopAsync()
     }
 
     decreaseScore() {
         this.setState({
             score: ((this.state.life > 0) && (this.state.score > 5)) ? this.state.score - 5 : this.state.score,
-            revealSkull: ((this.state.life > 0) && (this.state.score > 5)) ? true : false
+            revealSkull: true
         })
         setTimeout(() => {
             this.setState({revealSkull: false})
-        }, 150)
+        }, 250)
     }
 
     increaseScore() {
@@ -90,6 +96,51 @@ class Home extends React.Component {
         })
     }
 
+    async playGrunt() {
+
+        const soundObject = new Audio.Sound()
+        const gruntArray = [require('../../assets/sounds/grunt01.mp3'), require('../../assets/sounds/grunt02.mp3'), require('../../assets/sounds/grunt03.mp3'), require('../../assets/sounds/grunt04.mp3'), require('../../assets/sounds/grunt05.mp3'), require('../../assets/sounds/grunt06.mp3'), require('../../assets/sounds/grunt07.mp3'), require('../../assets/sounds/grunt08.mp3'), require('../../assets/sounds/grunt09.mp3')]
+
+        try {
+            this.setState({gruntNumber: (this.state.gruntNumber + Math.ceil(Math.random() * 8)) % 9})
+            await soundObject.loadAsync(gruntArray[this.state.gruntNumber])
+            this.grunt = soundObject
+                this.grunt.setPositionAsync(0)
+                this.grunt.playAsync()
+
+                .then(async playbackStatus => {
+                    setTimeout(() => {
+                        soundObject.unloadAsync()
+                    }, 650)
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+        } catch (error) {
+              console.log(error)
+        }
+    }
+
+    async playEndMusic() {
+        //https://www.youtube.com/watch?v=sR6TDLT5Jk0
+        //https://vodovoz.bandcamp.com/track/go-bossa-jazz-commercial-web-license
+        if (this.state.endMusicIsPlaying) {
+            return
+        }
+        this.setState({endMusicIsPlaying: true})
+        const soundObject = new Audio.Sound()
+
+        try {
+            await soundObject.loadAsync(require('../../assets/sounds/end-music.mp3'))
+            this.endMusic = soundObject
+                this.endMusic.setPositionAsync(0)
+                this.endMusic.playAsync()
+                this.endMusic.setIsLoopingAsync(true)
+        } catch (error) {
+              console.log(error)
+        }
+    }
+
     async componentDidMount() {
         await Font.loadAsync({
         'EncodeSansSemiExpanded-Bold': require('../../assets/fonts/EncodeSansSemiExpanded-Bold.ttf')
@@ -99,7 +150,7 @@ class Home extends React.Component {
         })
         await (wishwashControl = () => {
             let wishwashTimer = Math.random() * wishwash(this.state.counter, 1, 1200, true) //Where this.state.counter is initialized at 1200, this yo-yos between 1201 and 1 infinitely
-
+            this.state.life > 0 ? null : this.playEndMusic()
             this.setState({
                 counter: this.state.life > 0 ? this.state.counter + 1 : this.state.counter,
                 balloonNumber: this.state.life > 0 ? this.state.balloonNumber + 1 : this.state.balloonNumber
@@ -117,6 +168,7 @@ class Home extends React.Component {
     }
 
     render() {
+
         const allBalloons = []
         const allInitialClouds = []
         const allClouds = []
@@ -140,7 +192,7 @@ class Home extends React.Component {
 
         return(
             <View>
-                <TouchableOpacity style={{width: config.screenWidth, height: config.screenHeight}} onPressIn={() => this.decreaseScore()} activeOpacity={this.state.life > 0 ? 0 : 1}>
+                <TouchableOpacity style={{width: config.screenWidth, height: config.screenHeight}} onPressIn={() => {this.decreaseScore(); (this.state.sound && this.state.life > 0) ? this.playGrunt() : null}} activeOpacity={this.state.life > 0 ? 0 : 1}>
 
                 { this.state.life > 0 ? null :
                 <View style={{width: config.screenWidth, height: config.screenHeight}}>

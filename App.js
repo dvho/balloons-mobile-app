@@ -5,7 +5,7 @@ import * as Font from 'expo-font'
 import { Asset, Image } from 'expo-asset'
 const allFonts = [require('./src/assets/fonts/EncodeSansSemiExpanded-Bold.ttf')]
 const allImages = [require('./src/assets/images/balloon-radial-gradient.png'), require('./src/assets/images/beach.png')]
-const allSounds = [require('./src/assets/sounds/pop.mp3'), require('./src/assets/sounds/explosion.mp3'), require('./src/assets/sounds/ching.mp3')]
+const allSounds = [require('./src/assets/sounds/pop.mp3'), require('./src/assets/sounds/explosion.mp3'), require('./src/assets/sounds/ching.mp3'), require('./src/assets/sounds/grunt01.mp3'), require('./src/assets/sounds/grunt02.mp3'), require('./src/assets/sounds/grunt03.mp3'), require('./src/assets/sounds/grunt04.mp3'), require('./src/assets/sounds/grunt05.mp3'), require('./src/assets/sounds/grunt06.mp3'), require('./src/assets/sounds/grunt07.mp3'), require('./src/assets/sounds/grunt08.mp3'), require('./src/assets/sounds/grunt09.mp3'), require('./src/assets/sounds/end-music.mp3')]
 
 class App extends React.Component {
 
@@ -25,7 +25,7 @@ class App extends React.Component {
     cacheImages(images) {
         return images.map(image => {
             if (typeof image === 'string') {
-                //Just putting this as a placeholder for future use in case I later choose to include a URL in the allImages array above 
+                //Just putting this as a placeholder for future use in case I later choose to include a URL in the allImages array above
                 return Image.prefetch(image)
             } else {
                 return Asset.fromModule(image).downloadAsync()
