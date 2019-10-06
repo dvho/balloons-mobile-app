@@ -52,6 +52,7 @@ class Home extends React.Component {
             revealSkull: false
         })
         await this.endMusic.stopAsync()
+        await this.endMusic.unloadAsync()
     }
 
     decreaseScore() {
@@ -150,7 +151,7 @@ class Home extends React.Component {
         })
         await (wishwashControl = () => {
             let wishwashTimer = Math.random() * wishwash(this.state.counter, 1, 1200, true) //Where this.state.counter is initialized at 1200, this yo-yos between 1201 and 1 infinitely
-            this.state.life > 0 ? null : this.playEndMusic()
+            this.state.life > 0 ? null : (this.state.sound ? this.playEndMusic() : null)
             this.setState({
                 counter: this.state.life > 0 ? this.state.counter + 1 : this.state.counter,
                 balloonNumber: this.state.life > 0 ? this.state.balloonNumber + 1 : this.state.balloonNumber
