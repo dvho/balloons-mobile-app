@@ -49,7 +49,8 @@ class Home extends React.Component {
             cloudNumber: 0,
             score: 0,
             life: 3,
-            revealSkull: false
+            revealSkull: false,
+            diameter: null
         })
         await this.endMusic.stopAsync()
         await this.endMusic.unloadAsync()
