@@ -87,14 +87,14 @@ class Home extends React.Component {
         })
     }
 
-    sendPopParams(e, diameter, balloonColor, snowflake, watermelon) {
+    sendPopParams(e, diameter, balloonColor, snowflake) {
         this.setState({
             x: e.nativeEvent.pageX,
             y: e.nativeEvent.pageY,
             diameter: diameter,
             balloonColor: balloonColor,
             isSnowflake: snowflake,
-            isWatermelon: watermelon
+            isWatermelon: !snowflake && diameter === 30
         })
     }
 
