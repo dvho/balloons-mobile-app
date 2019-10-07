@@ -70,7 +70,10 @@ class Home extends React.Component {
         this.setState({score: this.state.life > 0 ? this.state.score + 1 : this.state.score})
     }
 
-    decreaseLife(touched) {
+    decreaseLife(touched, specialBalloon) {
+        if (specialBalloon) {
+            return
+        }
         this.setState({
             life: touched ? this.state.life : (this.state.life === 0 ? 0 : this.state.life - 1)})
     }
