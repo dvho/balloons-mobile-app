@@ -1,6 +1,7 @@
 {
   "expo": {
     "name": "Balloons",
+    "description": "Pop the balloons before they escape!",
     "slug": "balloons",
     "privacy": "public",
     "sdkVersion": "33.0.0",
@@ -11,12 +12,8 @@
     ],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
+    "primaryColor": "#6588ba",
+    "icon": "./src/assets/images/icon.png",
     "updates": {
       "fallbackToCacheTimeout": 0
     },
@@ -24,7 +21,12 @@
       "**/*"
     ],
     "ios": {
+      "bundleIdentifier": "io.expo.dvho.balloons",
       "supportsTablet": true
+    },
+    "splash": {
+        "image": "./src/assets/images/logo.png",
+        "resizeMode": "cover"
     }
   }
 }
