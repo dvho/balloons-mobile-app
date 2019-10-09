@@ -33,6 +33,7 @@ class Home extends React.Component {
             totalSnowflakePopped: 0,
             totalWatermelonPopped: 0,
             revealSkull: false,
+            skullNumber: 1,
             x: null,
             y: null,
             diameter: null,
@@ -77,8 +78,11 @@ class Home extends React.Component {
             revealSkull: true
         })
         setTimeout(() => {
-            this.setState({revealSkull: false})
-        }, 250)
+            this.setState({
+                revealSkull: false,
+                skullNumber: (this.state.skullNumber + 1) % 2
+            })
+        }, 300)
     }
 
     increaseScore() {
@@ -241,8 +245,8 @@ class Home extends React.Component {
                 </View> }
 
                 { this.state.life > 0 ?
-                    <View style={{marginTop: 40, opacity: .08, backgroundColor: 'rgb(255,255,255)'}}>
-                        <MaterialCommunityIcons name={'skull'} size={config.screenWidth} color={'rgb(0,0,0)'}/>
+                    <View style={{marginTop: 60, opacity: .08, backgroundColor: 'rgb(255,255,255)', alignItems: 'center'}}>
+                        <Image source={this.state.skullNumber === 0 ? require('../../assets/images/skull1.png') : require('../../assets/images/skull2.png')} style={{width: config.screenWidth * .85, height: (config.screenWidth * 1.6) * .85}}/>
                     </View> : null }
                 { this.state.life > 0 ? <View style={[styles.container, {opacity: this.state.revealSkull ? 0 : 1, backgroundColor: 'rgb(239,239,255)'}]}>
                     <LinearGradient colors={[`rgb(58,${wishwash(this.state.counter * 3, 32, 255, true)},255 )`, 'rgb(239,239,255)']} style={{position: 'absolute', width: 100 + '%', height: 100 + '%'}}/>

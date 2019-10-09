@@ -4,7 +4,7 @@ import { AppLoading } from 'expo'
 import * as Font from 'expo-font'
 import { Asset, Image } from 'expo-asset'
 const allFonts = [require('./src/assets/fonts/EncodeSansSemiExpanded-Bold.ttf')]
-const allImages = [require('./src/assets/images/balloon-radial-gradient.png'), require('./src/assets/images/beach.png')]
+const allImages = [require('./src/assets/images/balloon-radial-gradient.png'), require('./src/assets/images/beach.png'), require('./src/assets/images/icon.png'), require('./src/assets/images/logo.png'), require('./src/assets/images/skull1.png'), require('./src/assets/images/skull2.png')]
 const allSounds = [require('./src/assets/sounds/pop.mp3'), require('./src/assets/sounds/explosion.mp3'), require('./src/assets/sounds/ching.mp3'), require('./src/assets/sounds/grunt01.mp3'), require('./src/assets/sounds/grunt02.mp3'), require('./src/assets/sounds/grunt03.mp3'), require('./src/assets/sounds/grunt04.mp3'), require('./src/assets/sounds/grunt05.mp3'), require('./src/assets/sounds/grunt06.mp3'), require('./src/assets/sounds/grunt07.mp3'), require('./src/assets/sounds/grunt08.mp3'), require('./src/assets/sounds/grunt09.mp3'), require('./src/assets/sounds/end-music.mp3')]
 
 class App extends React.Component {
