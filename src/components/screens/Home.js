@@ -179,7 +179,6 @@ class Home extends React.Component {
         })
         await (wishwashControl = () => {
             let wishwashTimer = Math.random() * wishwash(this.state.counter, 1, 2400, true) //Where this.state.counter is initialized at 2400, this yo-yos between 2401 and 1 infinitely
-            console.log(wishwash(this.state.counter, 1, 2400, true))
             this.state.life > 0 ? null : (this.state.sound ? this.playEndMusic() : null)
             this.setState({
                 counter: this.state.life > 0 ? this.state.counter + 2 : this.state.counter,
