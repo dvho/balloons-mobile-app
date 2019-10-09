@@ -24,7 +24,14 @@ class Home extends React.Component {
             balloonNumber: 0,
             cloudNumber: 0,
             score: 0,
+            accuracy: 0,
+            speed: 0,
+            luck: 0,
             life: 3,
+            totalMissed: 0,
+            totalEscaped: 0,
+            totalSnowflakePopped: 0,
+            totalWatermelonPopped: 0,
             revealSkull: false,
             x: null,
             y: null,
@@ -48,7 +55,14 @@ class Home extends React.Component {
             balloonNumber: 0,
             cloudNumber: 0,
             score: 0,
+            accuracy: 0,
+            speed: 0,
+            luck: 0,
             life: 3,
+            totalMissed: 0,
+            totalEscaped: 0,
+            totalSnowflakePopped: 0,
+            totalWatermelonPopped: 0,
             revealSkull: false,
             diameter: null
         })
@@ -59,6 +73,7 @@ class Home extends React.Component {
     decreaseScore() {
         this.setState({
             score: ((this.state.life > 0) && (this.state.score > 5)) ? this.state.score - 5 : this.state.score,
+            totalMissed: this.state.life > 0 ? this.state.totalMissed + 1 : this.state.totalMissed,
             revealSkull: true
         })
         setTimeout(() => {
@@ -75,7 +90,9 @@ class Home extends React.Component {
             return
         }
         this.setState({
-            life: touched ? this.state.life : (this.state.life === 0 ? 0 : this.state.life - 1)})
+            life: touched ? this.state.life : (this.state.life === 0 ? 0 : this.state.life - 1),
+            totalEscaped: touched ? this.state.totalEscaped : (this.state.life === 0 ? this.state.totalEscaped : this.state.totalEscaped + 1),
+        })
     }
 
     increaseLife() {
@@ -86,7 +103,8 @@ class Home extends React.Component {
         this.setState({
             balloonNumber: this.state.life > 0 ? 0 : this.state.balloonNumber,
             score: this.state.score + 15,
-            life: this.state.life + 1 //when decreaseLife is calledback from Animation in Balloon.js when a snowflake is blown up a single life is being subtracted so making up for it here
+            life: this.state.life + 1, //when decreaseLife is calledback from Animation in Balloon.js when a snowflake is blown up a single life is being subtracted so making up for it here
+            totalEscaped: this.state.totalEscaped - 1 //when decreaseLife is calledback from Animation in Balloon.js when a snowflake is blown up totalEscaped is augmented so making up for it here
         })
     }
 
@@ -97,7 +115,9 @@ class Home extends React.Component {
             diameter: diameter,
             balloonColor: balloonColor,
             isSnowflake: snowflake,
-            isWatermelon: !snowflake && diameter === 30
+            isWatermelon: !snowflake && diameter === 30,
+            totalSnowflakePopped: snowflake ? this.state.totalSnowflakePopped + 1 : this.state.totalSnowflakePopped,
+            totalWatermelonPopped: (!snowflake && diameter === 30) ? this.state.totalWatermelonPopped + 1 : this.state.totalWatermelonPopped
         })
     }
 
@@ -158,7 +178,10 @@ class Home extends React.Component {
             this.state.life > 0 ? null : (this.state.sound ? this.playEndMusic() : null)
             this.setState({
                 counter: this.state.life > 0 ? this.state.counter + 1 : this.state.counter,
-                balloonNumber: this.state.life > 0 ? this.state.balloonNumber + 1 : this.state.balloonNumber
+                balloonNumber: this.state.life > 0 ? this.state.balloonNumber + 1 : this.state.balloonNumber,
+                accuracy: !this.state.life > 0 ? (this.state.score > 0 ? Math.round(((this.state.score + this.state.totalSnowflakePopped + this.state.totalWatermelonPopped) - this.state.totalMissed) / (this.state.score + this.state.totalSnowflakePopped + this.state.totalWatermelonPopped) * 100) : 0) : 0,
+                speed: !this.state.life > 0 ? (this.state.score > 0 ? Math.round(((this.state.score + this.state.totalSnowflakePopped + this.state.totalWatermelonPopped) - this.state.totalEscaped) / (this.state.score + this.state.totalSnowflakePopped + this.state.totalWatermelonPopped) * 100) : 0) : 0,
+                luck: !this.state.life > 0 ? ((this.state.score > 0 && ((this.state.totalSnowflakePopped > 0) || (this.state.totalWatermelonPopped > 0))) ? Math.round((this.state.totalWatermelonPopped / (this.state.score + this.state.totalSnowflakePopped + this.state.totalWatermelonPopped) * 100) + (this.state.totalSnowflakePopped / (this.state.score + this.state.totalSnowflakePopped + this.state.totalWatermelonPopped) * 15) * 100) : 0) : 0,
             })
             setTimeout(wishwashControl, wishwashTimer)
         })()
@@ -211,6 +234,9 @@ class Home extends React.Component {
                     <View style={{alignItems: 'center', marginTop: config.screenWidth/3}}>
                         <Text style={{fontFamily: 'EncodeSansSemiExpanded-Bold', fontSize: 24, paddingBottom: 20}}>Final Score: {this.state.score}</Text>
                         <TouchableOpacity onPressOut={() => this.restart()} style={{width: config.screenWidth/4.5, borderWidth: StyleSheet.hairlineWidth, borderRadius: config.screenWidth/40, borderColor: 'rgb(0,0,0)', justifyContent: 'center', alignItems: 'center'}}><MaterialCommunityIcons name={'backup-restore'} size={config.screenWidth/5} color={'rgb(0,0,0)'}/></TouchableOpacity>
+                        <Text style={{fontFamily: 'EncodeSansSemiExpanded-Bold', fontSize: 14, paddingTop: 14}}>Accuracy: {this.state.accuracy < 0 ? 0 : this.state.accuracy}%</Text>
+                        <Text style={{fontFamily: 'EncodeSansSemiExpanded-Bold', fontSize: 14, paddingTop: 10}}>Speed: {this.state.speed < 0 ? 0 : this.state.speed}%</Text>
+                        <Text style={{fontFamily: 'EncodeSansSemiExpanded-Bold', fontSize: 14, paddingTop: 10}}>Luck: {this.state.luck < 0 ? 0 : this.state.luck}%</Text>
                     </View>
                 </View> }
 
