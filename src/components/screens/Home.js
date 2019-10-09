@@ -82,7 +82,7 @@ class Home extends React.Component {
                 revealSkull: false,
                 skullNumber: (this.state.skullNumber + 1) % 2
             })
-        }, 250)
+        }, 175)
     }
 
     increaseScore() {
