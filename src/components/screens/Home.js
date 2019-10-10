@@ -51,8 +51,7 @@ class Home extends React.Component {
     async restart() {
         this.setState({
             endMusicIsPlaying: false,
-            gruntNumber: Math.ceil(Math.random() * 9),
-            counter: 1200,
+            counter: 2400,
             balloonNumber: 0,
             cloudNumber: 0,
             score: 0,
