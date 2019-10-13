@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Balloons",
-    "description": "Pop the balloons before they escape!",
+    "description": "Balloons is the ultimate game you can pick up and play anytime and anywhere. Pop the balloons before they rise to the top! Watermelon balloons give you an extra life and snowflake balloons pop all the balloons on the screen. Screenshot your final score and post it anywhere or just send it to a friend. Let everyone know how awesome you are at Balloons.",
     "slug": "balloons",
     "privacy": "public",
     "sdkVersion": "33.0.0",
@@ -13,13 +13,19 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "primaryColor": "#6588ba",
-    "icon": "./src/assets/images/icon.png",
+    "icon": "./src/assets/images/icon-large.png",
     "assetBundlePatterns": [
       "**/*"
     ],
     "ios": {
       "bundleIdentifier": "io.expo.dvho.balloons",
       "supportsTablet": true
+    },
+    "android" : {
+      "package" : "io.expo.dvho.balloons",
+      "permissions": [
+          ""
+      ]
     },
     "splash": {
         "image": "./src/assets/images/logo.png",

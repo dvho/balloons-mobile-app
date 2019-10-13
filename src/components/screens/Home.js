@@ -180,7 +180,7 @@ class Home extends React.Component {
             let wishwashTimer = Math.random() * wishwash(this.state.counter, 1, 2400, true) //Where this.state.counter is initialized at 2400, this yo-yos between 2401 and 1 infinitely
             this.state.life > 0 ? null : (this.state.sound ? this.playEndMusic() : null)
             this.setState({
-                counter: this.state.life > 0 ? this.state.counter + 2 : this.state.counter,
+                counter: this.state.life > 0 ? this.state.counter + 3 : this.state.counter,
                 balloonNumber: this.state.life > 0 ? this.state.balloonNumber + 1 : this.state.balloonNumber,
                 accuracy: !this.state.life > 0 ? (this.state.score > 0 ? Math.round(((this.state.score + this.state.totalSnowflakePopped + this.state.totalWatermelonPopped) - this.state.totalMissed) / (this.state.score + this.state.totalSnowflakePopped + this.state.totalWatermelonPopped) * 100) : 0) : 0,
                 speed: !this.state.life > 0 ? (this.state.score > 0 ? Math.round(((this.state.score + this.state.totalSnowflakePopped + this.state.totalWatermelonPopped) - this.state.totalEscaped) / (this.state.score + this.state.totalSnowflakePopped + this.state.totalWatermelonPopped) * 100) : 0) : 0,
@@ -228,7 +228,7 @@ class Home extends React.Component {
                 { this.state.life > 0 ? null :
                 <View style={{width: config.screenWidth, height: config.screenHeight}}>
 
-                <LinearGradient colors={[`rgb(58,${wishwash(this.state.counter * 2, 32, 255, true)},255 )`, 'rgb(239,239,255)', 'rgb(255,165,0)']} style={{position: 'absolute', width: 100 + '%', height: 100 + '%'}}/>
+                <LinearGradient colors={[`rgb(58,${wishwash(this.state.counter, 32, 255, true)},255 )`, 'rgb(239,239,255)', 'rgb(255,165,0)']} style={{position: 'absolute', width: 100 + '%', height: 100 + '%'}}/>
 
                 <LinearGradient colors={['rgb(0,192,241)', 'rgb(255,255,255)']} style={{position: 'absolute', bottom: 0, width: config.screenWidth, height: config.screenWidth * .405}}/>
 
@@ -248,7 +248,7 @@ class Home extends React.Component {
                         <Image source={this.state.skullNumber === 0 ? require('../../assets/images/skull1.png') : require('../../assets/images/skull2.png')} style={{width: config.screenWidth * .85, height: (config.screenWidth * 1.6) * .85}}/>
                     </View> : null }
                 { this.state.life > 0 ? <View style={[styles.container, {opacity: this.state.revealSkull ? 0 : 1, backgroundColor: 'rgb(239,239,255)'}]}>
-                    <LinearGradient colors={[`rgb(58,${wishwash(this.state.counter * 2, 32, 255, true)},255 )`, 'rgb(239,239,255)']} style={{position: 'absolute', width: 100 + '%', height: 100 + '%'}}/>
+                    <LinearGradient colors={[`rgb(58,${wishwash(this.state.counter, 32, 255, true)},255 )`, 'rgb(239,239,255)']} style={{position: 'absolute', width: 100 + '%', height: 100 + '%'}}/>
 
                     {allInitialClouds}
                     {allClouds}

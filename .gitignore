@@ -8,6 +8,7 @@ npm-debug.*
 *.mobileprovision
 *.orig.*
 assets-in-progress/
+publish-to-stores/
 .idea/
 android/
 web-build/
