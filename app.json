@@ -14,9 +14,6 @@
     "orientation": "portrait",
     "primaryColor": "#6588ba",
     "icon": "./src/assets/images/icon.png",
-    "updates": {
-      "fallbackToCacheTimeout": 0
-    },
     "assetBundlePatterns": [
       "**/*"
     ],
