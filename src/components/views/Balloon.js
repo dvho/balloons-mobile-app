@@ -46,7 +46,7 @@ class Balloon extends React.PureComponent {
 
             <Animated.View style={[styles.container, {left: positionFromLeft, top: top, zIndex: zIndex}]}>
 
-                <TouchableNativeFeedback onPressIn={(e) => {this.setState({touched: true}); this.props.sendPopParams(e, diameter, balloonColor, snowflake && specialBalloon); specialBalloon ? (snowflake ? this.props.blowUpSnowflake() : this.props.increaseLife()) : this.props.increaseScore()}} activeOpacity={1} style={{left: positionFromLeft}}>
+                <TouchableNativeFeedback onPressOut={(e) => {this.setState({touched: true}); this.props.sendPopParams(e, diameter, balloonColor, snowflake && specialBalloon); specialBalloon ? (snowflake ? this.props.blowUpSnowflake() : this.props.increaseLife()) : this.props.increaseScore()}} activeOpacity={1} style={{left: positionFromLeft}}>
                     <View style={[styles.balloon, {opacity: opacity, shadowOpacity: shadowOpacity, width: diameter, height: diameter, borderBottomLeftRadius: diameter, borderTopLeftRadius: diameter, borderTopRightRadius: diameter, backgroundColor: balloonColor}]}>{specialBalloon ? (snowflake ? <Text style={styles.special}>❄️</Text> : <Text style={styles.special}>🍉</Text>) : <Image source={require('../../assets/images/balloon-radial-gradient.png')} style={{marginLeft: diameter/12, marginTop: -diameter/12, width: diameter, height: diameter}}/>}</View>
                 </TouchableNativeFeedback>
 
