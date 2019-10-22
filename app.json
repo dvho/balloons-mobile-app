@@ -23,6 +23,8 @@
     },
     "android" : {
       "package" : "io.expo.dvho.balloons",
+      "versionCode": 2,
+      "playStoreUrl": "https://play.google.com/store/apps/details?id=io.expo.dvho.balloons",
       "permissions": [
           ""
       ]

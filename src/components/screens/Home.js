@@ -9,6 +9,8 @@ import { Balloon, Pop, Cloud, InitialCloud } from '../views'
 import config from '../../config'
 
 //Get expo running on AndroidStudio emulator: https://www.youtube.com/watch?v=Q0dERWCzoi0, https://docs.expo.io/versions/latest/workflow/android-studio-emulator/
+//To get an Android App Bundle (aab file, which will reduce file size by 50%) rather than an apk file run expo build:android -t app-bundle
+//https://customersupport.doubledutch.me/hc/en-us/articles/360001395033-Android-How-to-Update-an-App-in-the-Google-Play-Developer-Console
 //make a linearTimer and use its Math.random output to calc random clouds as well as special balloons (no longer use random function within Balloon.js to calc special balloons)
 
 class Home extends React.Component {
