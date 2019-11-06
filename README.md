@@ -1,12 +1,12 @@
-# Balloons
-_Balloons!_ is the ultimate game you can pick up and play anytime and anywhere.
+# Beach Balloons
+_Beach Balloons!_ is the ultimate game you can pick up and play anytime and anywhere.
 
 <img src="https://user-images.githubusercontent.com/45696445/68327608-a6683700-009b-11ea-9a45-4f3b7a5bbdb0.gif">
 
 _________________________
 
 #### How to Use
-Pop the balloons before they rise to the top! Watermelon balloons give you an extra life and snowflake balloons pop all the balloons on the screen. Screenshot your final score and post it anywhere or just send it to a friend. Let everyone know how awesome you are at _Balloons_.
+Pop the balloons before they rise to the top! Watermelon balloons give you an extra life and snowflake balloons pop all the balloons on the screen. Screenshot your final score and post it anywhere or just send it to a friend. Let everyone know how awesome you are at _Beach Balloons_.
 _________________________
 
 #### Features
