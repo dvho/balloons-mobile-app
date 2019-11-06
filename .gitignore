@@ -9,6 +9,8 @@ npm-debug.*
 *.orig.*
 assets-in-progress/
 publish-to-stores/
+balloons.gif
+balloons(compressed at youcompress.com).mov
 .idea/
 android/
 web-build/
