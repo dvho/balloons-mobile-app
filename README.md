@@ -16,7 +16,7 @@ _________________________
 _________________________
 
 #### Motivation
-I'd created a web version of this all original game and wanted to re-architect it from the ground up in React Native.
+I'd created a web version of this all original game and while it ran well in a browser it wasn't performant enough on mobile devices. I decided to re-architect the game from the ground up in React Native. Now available as a native mobile app the difference between the app and running the web version in a mobile browser is astounding. 
 _________________________
 
 #### License
